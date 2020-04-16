@@ -104,4 +104,6 @@ export const signUpThunkCreator = (newUser) => {
 }
 
 
+
+
 export default authReducer

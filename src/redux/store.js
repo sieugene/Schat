@@ -16,8 +16,10 @@ let reducers = combineReducers({
 
 
 const rrfConfig = {
-    userProfile: 'users',
-    useFirestoreForProfile: true // Firestore for Profile instead of Realtime DB
+    userProfile: 'users', // where profiles are stored in database
+    presence: 'presence', // where list of online users is stored in database
+    sessions: 'sessions', // where list of user sessions is stored in database (presence must be enabled)
+    useFirestoreForProfile: true
 }
 let store = createStore(reducers,
     compose(applyMiddleware(thunkMiddleware.withExtraArgument({ getFirestore, getFirebase })),
