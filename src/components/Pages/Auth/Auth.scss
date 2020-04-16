@@ -1,0 +1,26 @@
+.auth {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    &__top {
+        text-align: center;
+        h2 {
+            font-size: 28px;
+        }
+        p {
+            font-size: 18px;
+            opacity: 0.5;
+        }
+        margin-bottom: 50px;
+    }
+    &__register-link {
+        font-size: 16px;
+        color: #ADADAD;
+        display: flex;
+        justify-content: center;
+    }
+    .mainBlock {
+        width: 430px;
+    }
+}
