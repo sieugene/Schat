@@ -84,14 +84,13 @@ export const signOutThunkCreator = () => (dispatch) => {
 }
 
 export const signUpThunkCreator = (newUser) => {
+    debugger
     return (dispatch, getState, { getFirebase, getFirestore }) => {
         dispatch(toggleLoadingAC(true));
         const firestore = getFirestore();
         firebase.auth().createUserWithEmailAndPassword(newUser.email, newUser.password).then((response) => {
             return firestore.collection('users').doc(response.user.uid).set({
                 firstName: newUser.firstName,
-                lastName: newUser.lastName,
-                initials: newUser.firstName[0] + newUser.lastName[0],
                 photoURL: '',
                 createdAt: new Date()
             })

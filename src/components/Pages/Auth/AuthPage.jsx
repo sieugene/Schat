@@ -6,7 +6,7 @@ import RegisterForm from '../../RegisterForm/RegisterForm';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { authThunkCreator } from '../../../redux/authReducer';
+import { authThunkCreator, signUpThunkCreator } from '../../../redux/authReducer';
 const AuthPage = (props) => {
 
     return (
@@ -33,7 +33,10 @@ const AuthPage = (props) => {
                             <p>Для входа в чат, вам нужно зарегистрироваться.</p>
                         </div>
                         <MainBlock>
-                            <RegisterForm />
+                            <RegisterForm signUpThunkCreator={props.signUpThunkCreator}
+                             errorsAuth={props.errorsAuth}
+                             isLoadedAuth={props.isLoadedAuth}
+                            />
                         </MainBlock>
                     </>
                 )} />
@@ -51,6 +54,7 @@ let mapStateToProps = (state) => {
 }
 
 export default compose(connect(mapStateToProps,{
-    authThunkCreator
+    authThunkCreator,
+    signUpThunkCreator
 })
 )(AuthPage);
