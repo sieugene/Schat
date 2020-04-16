@@ -4,6 +4,9 @@ import './Auth.scss'
 import AuthForm from '../../AuthForm/AuthForm';
 import RegisterForm from '../../RegisterForm/RegisterForm';
 import { Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { authThunkCreator } from '../../../redux/authReducer';
 const AuthPage = (props) => {
 
     return (
@@ -16,7 +19,10 @@ const AuthPage = (props) => {
                             <p>Пожалуйста, войдите в свой аккаунт.</p>
                         </div>
                         <MainBlock>
-                            <AuthForm />
+                            <AuthForm authThunkCreator={props.authThunkCreator}
+                            errorsAuth={props.errorsAuth}
+                            isLoadedAuth={props.isLoadedAuth}
+                            />
                         </MainBlock>
                     </>
                 )} />
@@ -37,4 +43,14 @@ const AuthPage = (props) => {
     )
 }
 
-export default AuthPage;
+let mapStateToProps = (state) => {
+    return{
+        isLoadedAuth: state.auth.isLoaded,
+        errorsAuth: state.auth.errors
+    }
+}
+
+export default compose(connect(mapStateToProps,{
+    authThunkCreator
+})
+)(AuthPage);

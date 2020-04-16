@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 const AuthForm = (props) => {
     const onFinish = values => {
         console.log('Success:', values);
+        props.authThunkCreator(values);
     };
     const onFinishFailed = errorInfo => {
         console.log('Failed:', errorInfo);
@@ -18,11 +19,11 @@ const AuthForm = (props) => {
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}>
             <Form.Item
-                name="username"
+                name="email"
                 rules={[
                     {
                         required: true,
-                        message: 'Please input your username!',
+                        message: 'Please input your email!',
                     },
                 ]}>
                 <Input size="large" />
