@@ -7,8 +7,8 @@ const SET_ERRORS_SIGN_UP = 'SET_ERRORS_SIGN_UP'
 let initialState = {
     isLoaded: false,
     errors: {
-        errorsSignIn: {},
-        errorsSignUp: {}
+        errorsSignIn: [],
+        errorsSignUp: []
     }
 }
 
@@ -72,6 +72,9 @@ export const authThunkCreator = (credentials) => {
             console.log('Some errors in auth')
             dispatch(toggleLoadingAC(false))
             dispatch(setErrorsSignInAC(err))
+            setTimeout(() => {
+                dispatch(setErrorsSignInAC([]))
+            }, 5000)
         })
     }
 }
@@ -84,7 +87,6 @@ export const signOutThunkCreator = () => (dispatch) => {
 }
 
 export const signUpThunkCreator = (newUser) => {
-    debugger
     return (dispatch, getState, { getFirebase, getFirestore }) => {
         dispatch(toggleLoadingAC(true));
         const firestore = getFirestore();
@@ -99,6 +101,9 @@ export const signUpThunkCreator = (newUser) => {
         }).catch((err) => {
             dispatch(setErrorsSignUpAC(err))
             dispatch(toggleLoadingAC(false));
+            setTimeout(() => {
+                dispatch(setErrorsSignUpAC([]))
+            }, 5000)
         })
     }
 }

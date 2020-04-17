@@ -1,13 +1,15 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import MainBlock from '../../MainBlock/MainBlock';
 import './Auth.scss'
-import AuthForm from '../../AuthForm/AuthForm';
-import RegisterForm from '../../RegisterForm/RegisterForm';
+
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { authThunkCreator, signUpThunkCreator, isOnlineThunkCreator } from '../../../redux/authReducer';
+import { authThunkCreator, signUpThunkCreator } from '../../../redux/authReducer';
 import { useFirebaseConnect } from 'react-redux-firebase';
+import AuthForm from './../../Forms/AuthForm/AuthForm';
+import RegisterForm from './../../Forms/RegisterForm/RegisterForm';
+
 
 const AuthPage = (props) => {
 //to view online users

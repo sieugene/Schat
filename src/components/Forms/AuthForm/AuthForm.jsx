@@ -1,8 +1,11 @@
 import React from 'react';
 import { Form, Input, Checkbox } from 'antd';
-import Button from './../Button/Button'
+import Button from '../../Button/Button'
 import { NavLink } from 'react-router-dom';
-const AuthForm = (props) => {
+import ShowErrors from '../../Assets/ShowErrors/ShowErrors';
+import './AuthForm.scss'
+
+const AuthForm = React.memo(props => {
     const onFinish = values => {
         console.log('Success:', values);
         props.authThunkCreator(values);
@@ -18,6 +21,9 @@ const AuthForm = (props) => {
             }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}>
+          
+            <ShowErrors error={props.errorsAuth.errorsSignIn}/>
+         
             <Form.Item
                 name="email"
                 rules={[
@@ -51,7 +57,8 @@ const AuthForm = (props) => {
             </Form.Item>
         </Form>
 
-    )
-}
+                )
+})
+
 
 export default AuthForm

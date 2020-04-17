@@ -1,8 +1,11 @@
 import React from 'react';
 import { Form, Input } from 'antd';
-import Button from './../Button/Button'
+import Button from '../../Button/Button'
 import { NavLink } from 'react-router-dom';
-const RegisterForm = (props) => {
+import ShowErrors from '../../Assets/ShowErrors/ShowErrors';
+
+
+const RegisterForm = React.memo(props => {
     const validateMessages = {
         required: 'Имя обязательное!!',
         types: {
@@ -11,7 +14,7 @@ const RegisterForm = (props) => {
     };
     const onFinish = values => {
         console.log('Success:', values);
-        //props.signUpThunkCreator(values);
+        props.signUpThunkCreator(values);
     };
     const onFinishFailed = errorInfo => {
         console.log('Failed:', errorInfo);
@@ -24,7 +27,7 @@ const RegisterForm = (props) => {
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             validateMessages={validateMessages}>
-
+              <ShowErrors error={props.errorsAuth.errorsSignUp}/>
             <Form.Item name={'email'} rules={[{ type: 'email' }]}>
                 <Input size="large" placeholder="Email" />
             </Form.Item>
@@ -73,6 +76,6 @@ const RegisterForm = (props) => {
         </Form>
 
     )
-}
+})
 
 export default RegisterForm
