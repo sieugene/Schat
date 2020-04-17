@@ -1,7 +1,7 @@
 import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import thunkMiddleware from "redux-thunk";
 import { firebaseReducer, getFirebase } from "react-redux-firebase";
-import fbConfig from './../config/fbConfig'
+import fbConfig from '../config/fbConfig'
 import firebase from 'firebase/app'
 import { createFirestoreInstance, firestoreReducer, getFirestore, reduxFirestore } from "redux-firestore";
 import authReducer from "./authReducer";
@@ -14,6 +14,8 @@ let reducers = combineReducers({
     firestore: firestoreReducer
 })
 
+type RootReducerType = typeof reducers;
+export type AppStateType = ReturnType<RootReducerType>
 
 const rrfConfig = {
     userProfile: 'users', // where profiles are stored in database
@@ -23,7 +25,7 @@ const rrfConfig = {
 }
 let store = createStore(reducers,
     compose(applyMiddleware(thunkMiddleware.withExtraArgument({ getFirestore, getFirebase })),
-        reduxFirestore(fbConfig, rrfConfig)
+        reduxFirestore(fbConfig)
     )
 );
 
@@ -33,7 +35,7 @@ export const rrfProps = {
     dispatch: store.dispatch,
     createFirestoreInstance
 }
-
+//@ts-ignore
 window.store = store;
 
 export default store

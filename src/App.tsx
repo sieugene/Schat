@@ -3,8 +3,18 @@ import AuthPage from './components/Pages/Auth/AuthPage';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { signOutThunkCreator } from './redux/authReducer';
+import { AppStateType } from './redux/store';
+import { FirebaseReducer } from 'react-redux-firebase';
 
-function App(props) {
+
+type mapStateType = {
+  firebaseAuth: FirebaseReducer.AuthState
+}
+type mapDispatchType = {
+  signOutThunkCreator: () => void
+}
+type PropsType = mapStateType & mapDispatchType
+const App:React.FC<PropsType> = (props) => {
   return (
     <div className="wrapper">
       {props.firebaseAuth ? props.firebaseAuth.email : 'net'}
@@ -14,7 +24,7 @@ function App(props) {
   );
 }
 
-let mapStateToProps = (state) => {
+let mapStateToProps = (state:AppStateType):mapStateType => {
   return{
     firebaseAuth: state.firebase.auth
   }
