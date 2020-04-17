@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { signOutThunkCreator } from './redux/authReducer';
 import { AppStateType } from './redux/store';
 import { FirebaseReducer } from 'react-redux-firebase';
+import Chat from './components/Pages/Chat/Chat';
+import { Route } from 'react-router-dom';
 
 
 type mapStateType = {
@@ -17,6 +19,7 @@ type PropsType = mapStateType & mapDispatchType
 const App:React.FC<PropsType> = (props) => {
   return (
     <div className="wrapper">
+      <Route exact path='/chat' render={() => (<Chat/>)}/>
       {props.firebaseAuth ? props.firebaseAuth.email : 'net'}
       <button onClick={props.signOutThunkCreator}>Sign out</button>
      <AuthPage/>
