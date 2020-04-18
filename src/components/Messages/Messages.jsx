@@ -1,20 +1,21 @@
 import React from 'react'
-import { Row } from 'antd';
+import { Row, Col } from 'antd';
 import HeaderMessages from './Header/HeaderMessages';
 import ChatBody from './ChatBody/ChatBody';
 
 const Messages = (props) => {
-    return(
-      <>
+  return (
+    <>
+      <div className="container">
         <Row>
-            <HeaderMessages/>
+          <HeaderMessages />
         </Row>
         <Row>
-            <ChatBody/>
+          <ChatBody />
         </Row>
-
-      </>
-    )
+      </div>
+    </>
+  )
 }
 
 export default Messages

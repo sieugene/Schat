@@ -1,0 +1,15 @@
+.messagebody {
+    min-width: 81px;
+    max-width: 300px;
+    border-radius: 11px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #f98d47a6;
+    p {
+        margin: 0;
+        color: white;
+        word-break: break-all;
+    }
+}

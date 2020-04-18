@@ -1,69 +1,84 @@
-import React from 'react'
+import React from 'react';
+import ReactWaves from '@dschoon/react-waves';
+import { PlayCircleOutlined, PauseCircleOutlined } from '@ant-design/icons';
+import './Audio.scss'
 
+export default class Audio extends React.Component {
 
-class Audio extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
-            duration: null
+            wavesurfer: null,
+            playing: false,
+            pos: 0,
+        };
+    }
+
+    onLoading = ({ wavesurfer, originalArgs = [] }) => {
+        this.setState({ loaded: originalArgs[0] === 100, wavesurfer });
+    };
+
+    onPosChange = (pos, wavesurfer) => {
+        if (pos !== this.state.pos) {
+            this.setState({ pos, wavesurfer });
         }
     };
 
-    handlePlay() {
-        this.audio.play();
-    }
-
-    handleStop() {
-        this.audio.currentTime = 0;
-        this.slider.value = 0;
-        this.audio.pause();
-    }
-
-    componentDidMount() {
-        this.slider.value = 0;
-        this.currentTimeInterval = null;
-
-        // Get duration of the song and set it as max slider value
-        this.audio.onloadedmetadata = function () {
-            this.setState({ duration: this.audio.duration });
-        }.bind(this);
-
-        // Sync slider position with song current time
-        this.audio.onplay = () => {
-            this.currentTimeInterval = setInterval(() => {
-                this.slider.value = this.audio.currentTime;
-            }, 500);
-        };
-
-        this.audio.onpause = () => {
-            clearInterval(this.currentTimeInterval);
-        };
-
-        // Seek functionality
-        this.slider.onchange = (e) => {
-            clearInterval(this.currentTimeInterval);
-            this.audio.currentTime = e.target.value;
-        };
-    }
 
     render() {
-        return <div>
-            <audio ref={(audio) => { this.audio = audio }} src={this.props.srcAudio} />
 
-            <input type="button" value="Play"
-                onClick={this.handlePlay.bind(this)} />
-
-            <input type="button"
-                value="Stop"
-                onClick={this.handleStop.bind(this)} />
-
-            <p><input ref={(slider) => { this.slider = slider }}
-                type="range"
-                name="points"
-                min="0" max={this.state.duration} /> </p>
-        </div>
+        if (!this.props.srcAudio) {
+            return ''
+        }
+        return (
+            <div className={'voicemessage container'}>
+                <div className='play button'
+                    onClick={() => { this.setState({ playing: !this.state.playing }) }}>
+                    {!this.state.playing
+                        ?
+                        <PlayCircleOutlined style={{ fontSize: '24px' }} />
+                        :
+                        <PauseCircleOutlined style={{ fontSize: '24px' }} />}
+                </div>
+                <ReactWaves
+                    audioFile={this.props.srcAudio}
+                    options={{
+                        barGap: 1,
+                        barWidth: .8,
+                        barHeight: 2,
+                        cursorWidth: 1,
+                        height: 30,
+                        hideScrollbar: true,
+                        progressColor: '#EC407A',
+                        normalize: true,
+                        responsive: true,
+                        waveColor: '#D1D6DA',
+                    }}
+                    volume={1}
+                    zoom={1}
+                    pos={this.state.pos}
+                    playing={this.state.playing}
+                    onPosChange={this.onPosChange}
+                    onLoading={this.onLoading}
+                    timelineOptions={{
+                        container: '#timeline',
+                        height: 20,
+                        notchPercentHeight: 90,
+                        labelPadding: 5,
+                        unlabeledNotchColor: '#c0c0c0',
+                        primaryColor: '#000',
+                        secondaryColor: '#c0c0c0',
+                        primaryFontColor: '#000',
+                        secondaryFontColor: '#000',
+                        fontFamily: 'Arial',
+                        fontSize: 10,
+                        duration: null,
+                        zoomDebounce: false,
+                        offset: 0
+                    }}
+                />
+                <div id='timeline' style={{ width: '0px', margin: '0 auto' }} />
+            </div>
+        )
     }
 }
-
-export default Audio

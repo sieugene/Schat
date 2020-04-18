@@ -1,20 +1,25 @@
 import React from 'react'
 import Audio from './MessageType/Audio';
+import './Message.scss'
 
 
 
-
-const MessageType = (props) => {
-
+const MessageType = (props) => { 
+    let content = '';
     if (props.messageType === 'img') {
-        return <img src={props.message} />
+        content = <img src={props.message} />
     }
     if (props.messageType === 'text') {
-        return <p>{props.message}</p>
+        content = <p>{props.message}</p>
     }
     if (props.messageType === 'audio') {
-        return <Audio />
+        content = <Audio srcAudio={props.message}/>
     }
+    return(
+        <div className='messagebody'>
+            {content}
+        </div>
+    )
 }
 
 export default MessageType
