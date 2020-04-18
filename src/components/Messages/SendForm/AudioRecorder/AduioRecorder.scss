@@ -1,0 +1,27 @@
+.hideGraph {
+    visibility: hidden;
+    height: 0;
+    .audioContainer {
+        padding-bottom: 0px;
+    }
+}
+
+.showGraph {
+    visibility: inherit;
+    height: 40px;
+    .audioContainer {
+        padding-bottom: 45px;
+    }
+}
+
+.audioContainer {
+    position: relative;
+    audio {
+        display: none;
+    }
+    canvas {
+        border-radius: 55px;
+        height: 36px !important;
+        width: 100% !important;
+    }
+}
