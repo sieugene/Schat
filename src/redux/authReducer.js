@@ -91,11 +91,12 @@ export const signUpThunkCreator = (newUser) => {
         dispatch(toggleLoadingAC(true));
         const firestore = getFirestore();
         firebase.auth().createUserWithEmailAndPassword(newUser.email, newUser.password).then((response) => {
-            return firestore.collection('users').doc(response.user.uid).set({
+            firestore.collection('users').doc(response.user.uid).set({
                 firstName: newUser.firstName,
                 photoURL: '',
                 createdAt: new Date()
             })
+            firestore.collection('dialogs').doc(response.user.uid).set({})
         }).then((response) => {
             dispatch(toggleLoadingAC(false));
         }).catch((err) => {
@@ -107,6 +108,36 @@ export const signUpThunkCreator = (newUser) => {
         })
     }
 }
+
+////test
+export const startDialog = (uid, myId) => {
+    return (dispatch, getState, { getFirebase, getFirestore }) => {
+        dispatch(toggleLoadingAC(true));
+        const firestore = getFirestore();
+        firestore.collection('dialogs').doc(myId).set({
+            [uid]: {
+                startedDialog: true,
+                messages: []
+            }
+        })
+        firestore.collection('dialogs').doc(uid).set({
+                [myId]: {
+                    startedDialog: true,
+                    messages: []
+                }
+            })
+            .then((response) => {
+                dispatch(toggleLoadingAC(false));
+            }).catch((err) => {
+                dispatch(setErrorsSignUpAC(err))
+                dispatch(toggleLoadingAC(false));
+                setTimeout(() => {
+                    dispatch(setErrorsSignUpAC([]))
+                }, 5000)
+            })
+    }
+}
+
 
 
 

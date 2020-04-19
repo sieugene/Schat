@@ -9,6 +9,7 @@ import { authThunkCreator, signUpThunkCreator } from '../../../redux/authReducer
 import { useFirebaseConnect } from 'react-redux-firebase';
 import AuthForm from './../../Forms/AuthForm/AuthForm';
 import RegisterForm from './../../Forms/RegisterForm/RegisterForm';
+import { startDialog } from './../../../redux/authReducer';
 
 
 const AuthPage = (props) => {
@@ -17,6 +18,11 @@ useFirebaseConnect('presence')
 
     return (
         <section className='auth'>
+            <button onClick={
+                () => {
+                    props.startDialog('1','2')
+                }
+            }>start dialog</button>
             <div className="auth__content">
                 <Route exact path='/login' render={() => (
                     <>
@@ -62,5 +68,7 @@ let mapStateToProps = (state) => {
 export default compose(
     connect(mapStateToProps,{
     authThunkCreator,
-    signUpThunkCreator})
+    signUpThunkCreator,
+    startDialog
+})
 )(AuthPage);
