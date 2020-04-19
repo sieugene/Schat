@@ -92,11 +92,11 @@ export const signUpThunkCreator = (newUser) => {
         const firestore = getFirestore();
         firebase.auth().createUserWithEmailAndPassword(newUser.email, newUser.password).then((response) => {
             firestore.collection('users').doc(response.user.uid).set({
-                firstName: newUser.firstName,
-                photoURL: '',
-                createdAt: new Date()
-            })
-            firestore.collection('dialogs').doc(response.user.uid).set({})
+                    firstName: newUser.firstName,
+                    photoURL: '',
+                    createdAt: new Date()
+                })
+                //firestore.collection('dialogs').doc(response.user.uid).set({})
         }).then((response) => {
             dispatch(toggleLoadingAC(false));
         }).catch((err) => {
