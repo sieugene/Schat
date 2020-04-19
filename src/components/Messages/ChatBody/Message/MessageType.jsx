@@ -4,18 +4,21 @@ import './Message.scss'
 
 
 
-const MessageType = (props) => { 
+const MessageType = (props) => {
     let content = '';
     if (props.messageType === 'img') {
-        content = <img src={props.message} />
+        content = <div className='imgItem'
+            style={{ backgroundImage: `url(${props.message})` }}>
+            <img src={props.message} alt='imageMessage' />
+        </div>
     }
     if (props.messageType === 'text') {
         content = <p>{props.message}</p>
     }
     if (props.messageType === 'audio') {
-        content = <Audio srcAudio={props.message}/>
+        content = <Audio srcAudio={props.message} />
     }
-    return(
+    return (
         <div className='messagebody'>
             {content}
         </div>

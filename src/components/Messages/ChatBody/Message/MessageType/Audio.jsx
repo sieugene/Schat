@@ -49,10 +49,10 @@ export default class Audio extends React.Component {
                         cursorWidth: 1,
                         height: 30,
                         hideScrollbar: true,
-                        progressColor: '#EC407A',
+                        progressColor: '#000000',
                         normalize: true,
                         responsive: true,
-                        waveColor: '#D1D6DA',
+                        waveColor: '#FFFFFF',
                     }}
                     volume={1}
                     zoom={1}

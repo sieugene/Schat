@@ -4,7 +4,7 @@ import {MenuOutlined} from '@ant-design/icons'
 const NavbarDialogs = (props) => {
     return (
         <div>
-            <MenuOutlined />
+            <MenuOutlined style={{fontSize: '18px'}}/>
         </div>
     )
 }

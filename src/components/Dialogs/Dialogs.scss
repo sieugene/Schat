@@ -1,0 +1,27 @@
+@mixin paddings__dialogs() {
+    padding: 10px;
+}
+
+.dialogs {
+    -webkit-box-shadow: 10px 0px 19px 0px rgba(50, 50, 50, 0.25);
+    -moz-box-shadow: 10px 0px 19px 0px rgba(50, 50, 50, 0.25);
+    box-shadow: 10px 0px 19px 0px rgba(50, 50, 50, 0.25);
+    height: 100vh;
+    position: relative;
+    z-index: 1;
+    .header__dialogs {
+        background-color: #ffffff;
+        @include paddings__dialogs();
+        height: 70px;
+    }
+    .SearchDialogs__dialogs {
+        background-color: #f6f6f6;
+        @include paddings__dialogs();
+    }
+    .ListDialogs__dialogs {
+        background-color: #ffffff;
+        @include paddings__dialogs();
+        height: 90vh;
+        overflow: auto;
+    }
+}

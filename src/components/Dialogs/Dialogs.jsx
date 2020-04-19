@@ -3,20 +3,20 @@ import HeaderDialogs from './Header/HeaderDialogs'
 import SearchDialogs from './Search/SearchDialogs'
 import { Row } from 'antd'
 import ListDialogs from './ListDialogs/ListDialogs';
-
+import './Dialogs.scss'
 const Dialogs = (props) => {
     return (
-        <>
-            <Row justify="space-between">
+        <div className="dialogs">
+            <Row justify="space-between" className='header__dialogs'>
                 <HeaderDialogs />
             </Row>
-            <Row>
-                <SearchDialogs />
+            <Row className='SearchDialogs__dialogs'>
+                <SearchDialogs/>
             </Row>
-            <Row>
+            <Row className='ListDialogs__dialogs'>
                 <ListDialogs/>
             </Row>
-        </>
+        </div>
     )
 }
 

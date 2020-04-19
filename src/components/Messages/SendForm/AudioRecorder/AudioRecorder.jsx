@@ -92,7 +92,9 @@ export default class AudioRecorder extends Component {
                     </Col>
                 </Row>
                 {this.state.audioSrc &&
-                    <Audio srcAudio={this.state.audioSrc}/>
+                    <div className='messagebody'>
+                        <Audio srcAudio={this.state.audioSrc} />
+                    </div>
                 }
                 {/* <select name="" id="" onChange={(e) => this.changeScheme(e)} value={audioType}>
                     <option value="audio/webm">audio/webm（default）</option>

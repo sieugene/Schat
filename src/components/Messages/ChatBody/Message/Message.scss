@@ -6,10 +6,46 @@
     padding-right: 10px;
     padding-top: 5px;
     padding-bottom: 5px;
-    background-color: #f98d47a6;
+    background-color: white;
+    -webkit-box-shadow: 0px 0px 25px 0px rgba(50, 50, 50, 0.25);
+    -moz-box-shadow: 0px 0px 25px 0px rgba(50, 50, 50, 0.25);
+    box-shadow: 0px 0px 25px 0px rgba(50, 50, 50, 0.25);
+    overflow: hidden;
     p {
         margin: 0;
-        color: white;
+        color: black;
         word-break: break-all;
+    }
+}
+
+.ant-row.ant-row-flex-end {
+    .messagebody {
+        background-color: #ffcf973d !important;
+    }
+}
+
+.messageItem {
+    display: flex;
+    margin-bottom: 20px;
+    svg {
+        max-height: 34px;
+        max-width: 34px;
+    }
+    img {
+        max-width: 282px;
+        padding: 0px;
+    }
+    .ant-avatar.ant-avatar-icon {
+        margin-right: 10px !important;
+        margin-left: 10px !important;
+    }
+    .imgItem {
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        margin: 10px;
+        img {
+            visibility: hidden;
+        }
     }
 }
