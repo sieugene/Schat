@@ -109,35 +109,6 @@ export const signUpThunkCreator = (newUser) => {
     }
 }
 
-////test
-export const startDialog = (uid, myId) => {
-    return (dispatch, getState, { getFirebase, getFirestore }) => {
-        dispatch(toggleLoadingAC(true));
-        const firestore = getFirestore();
-        firestore.collection('dialogs').doc(myId).set({
-            [uid]: {
-                startedDialog: true,
-                messages: []
-            }
-        })
-        firestore.collection('dialogs').doc(uid).set({
-                [myId]: {
-                    startedDialog: true,
-                    messages: []
-                }
-            })
-            .then((response) => {
-                dispatch(toggleLoadingAC(false));
-            }).catch((err) => {
-                dispatch(setErrorsSignUpAC(err))
-                dispatch(toggleLoadingAC(false));
-                setTimeout(() => {
-                    dispatch(setErrorsSignUpAC([]))
-                }, 5000)
-            })
-    }
-}
-
 
 
 

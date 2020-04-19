@@ -1,28 +1,17 @@
 import React from 'react';
 import MainBlock from '../../MainBlock/MainBlock';
 import './Auth.scss'
-
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { authThunkCreator, signUpThunkCreator } from '../../../redux/authReducer';
-import { useFirebaseConnect } from 'react-redux-firebase';
 import AuthForm from './../../Forms/AuthForm/AuthForm';
 import RegisterForm from './../../Forms/RegisterForm/RegisterForm';
-import { startDialog } from './../../../redux/authReducer';
 
 
 const AuthPage = (props) => {
-//to view online users
-useFirebaseConnect('presence')
-
     return (
         <section className='auth'>
-            <button onClick={
-                () => {
-                    props.startDialog('1','2')
-                }
-            }>start dialog</button>
             <div className="auth__content">
                 <Route exact path='/login' render={() => (
                     <>
@@ -61,14 +50,14 @@ useFirebaseConnect('presence')
 let mapStateToProps = (state) => {
     return{
         isLoadedAuth: state.auth.isLoaded,
-        errorsAuth: state.auth.errors
+        errorsAuth: state.auth.errors,
+        
     }
 }
 
 export default compose(
     connect(mapStateToProps,{
     authThunkCreator,
-    signUpThunkCreator,
-    startDialog
+    signUpThunkCreator
 })
 )(AuthPage);
