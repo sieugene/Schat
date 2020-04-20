@@ -1,14 +1,12 @@
-export const createChatRoom = (userId) => {
+export const createChatRoom = (myId, userId) => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {
-
         const firestore = getFirestore();
 
-        firestore.collection('rooms').add({
+        firestore.collection('dialogs').add({
             Users: 0,
-            creator: userId
-        }).then((resp) => {
-            debugger
-        })
+            creator: myId,
+            invited: userId
+        }).then((resp) => {})
 
     }
 }

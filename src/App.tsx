@@ -1,5 +1,6 @@
 import React from 'react';
 import AuthPage from './components/Pages/Auth/AuthPage';
+import TakeDialogs from './components/CreateChatRoomTest/TakeDialogs'
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { signOutThunkCreator } from './redux/authReducer';
@@ -7,7 +8,6 @@ import { AppStateType } from './redux/store';
 import { FirebaseReducer } from 'react-redux-firebase';
 import Chat from './components/Pages/Chat/Chat';
 import { Route } from 'react-router-dom';
-import CreateChatRoomTest from './components/CreateChatRoomTest/CreateChatRoomTest';
 import Room from './components/CreateChatRoomTest/Room';
 
 
@@ -22,7 +22,7 @@ type PropsType = mapStateType & mapDispatchType
 const App:React.FC<PropsType> = (props) => {
   return (
     <div className="wrapper">
-      <Route exact path='/create' render={() => (<CreateChatRoomTest/>)}/>
+      <Route exact path='/create' render={() => (<TakeDialogs />)}/>
       <Route exact path='/room/:roomId' render={() => (<Room/>)}/>
       <Route exact path='/chat' render={() => (<Chat/>)}/>
       {props.firebaseAuth ? props.firebaseAuth.email : 'net'}

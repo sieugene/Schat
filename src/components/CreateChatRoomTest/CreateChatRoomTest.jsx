@@ -1,38 +1,28 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { createChatRoom } from './../../redux/CreateChat';
-import { useFirestoreConnect } from 'react-redux-firebase';
-import { compose } from 'redux';
-import { withRouter, NavLink } from 'react-router-dom';
+import React, { useState } from 'react'
+
+
 
 const CreateChatRoomTest = (props) => {
-    useFirestoreConnect([
-        { collection: 'rooms' }
-    ])
+    const [value, setValue] = useState('');
+    const handleChange = (e) => {
+        setValue(e.target.value)
+    }
     return (
         <div>
             <h5>твой id: {props.myId}</h5>
+            <input value={value}
+                placeholder='введи id собеседника' onChange={handleChange} />
             <button
                 onClick={() => {
-                    props.createChatRoom(props.myId)
+                    props.creatingChat(value)
                 }}
             >
                 Создать чат
             </button>
-            {props.rooms ?
-                props.rooms.map((r) => {
-                    return <div>
-                        номер{' ' + r.id}
-                        <NavLink to={'room/' + r.id}>
-                            перейти
-                        </NavLink>
-                    </div>
-                })
-                : ''
-            }
-            <a>
-                Ссылка:
-            </a>
+
+            <h2>Суммарно:</h2>
+            {props.dialogs}
+
             <br />
             <br />
             <br />
@@ -41,15 +31,5 @@ const CreateChatRoomTest = (props) => {
     )
 }
 
-let mapStateToProps = (state) => {
-    return {
-        myId: state.firebase.auth.uid,
-        rooms: state.firestore.ordered.rooms
-    }
-}
 
-export default compose(
-    withRouter,
-    connect(mapStateToProps, {
-        createChatRoom
-    }))(CreateChatRoomTest)
+export default CreateChatRoomTest
