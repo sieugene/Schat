@@ -48,13 +48,20 @@ const TakeDialogs = (props) => {
     //проверка дублирования уже с имеющимися 
     const creatingChat = (value) => {
         const shadowArray = result;
-        if (shadowArray) {
-            debugger
-            let result = shadowArray.filter((room, index) => {
-                return room.creator === value || room.invited === value
-            })
-            if (result.length === 0) {
-                props.createChatRoom(props.myId, value)
+        if (value.length >= 2) {
+            if (shadowArray) {
+                if (value !== props.myId) {
+                    let result = shadowArray.filter((room, index) => {
+                        return room.creator === value || room.invited === value
+                    })
+                    if (result.length === 0) {
+                        props.createChatRoom(props.myId, value)
+                    } else {
+                        alert('найден дубликат!')
+                    }
+                } else {
+                    alert('вы не можете создать диалог с самим собой!')
+                }
             }
         }
     }
@@ -63,6 +70,7 @@ const TakeDialogs = (props) => {
         <CreateChatRoomTest dialogs={mapping}
             myId={props.myId} createChatRoom={props.createChatRoom}
             creatingChat={creatingChat}
+            users={props.users}
         />
     )
 }

@@ -94,7 +94,8 @@ export const signUpThunkCreator = (newUser) => {
             firestore.collection('users').doc(response.user.uid).set({
                     firstName: newUser.firstName,
                     photoURL: '',
-                    createdAt: new Date()
+                    createdAt: new Date(),
+                    email: newUser.email
                 })
                 //firestore.collection('dialogs').doc(response.user.uid).set({})
         }).then((response) => {
