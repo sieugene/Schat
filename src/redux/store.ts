@@ -5,13 +5,15 @@ import fbConfig from '../config/fbConfig'
 import firebase from 'firebase/app'
 import { createFirestoreInstance, firestoreReducer, getFirestore, reduxFirestore } from "redux-firestore";
 import authReducer from "./authReducer";
+import createChatReducer from "./CreateChat";
 
 
 
 let reducers = combineReducers({
     auth: authReducer,
+    createChat: createChatReducer,
     firebase: firebaseReducer,
-    firestore: firestoreReducer
+    firestore: firestoreReducer    
 })
 
 type RootReducerType = typeof reducers;

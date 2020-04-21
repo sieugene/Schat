@@ -3,17 +3,23 @@ import { withRouter } from 'react-router-dom'
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { useFirestoreConnect } from 'react-redux-firebase';
+import { Spin } from 'antd';
 
 const Room = (props) => {
     useFirestoreConnect([
-        { collection: 'rooms', doc: props.match.params.roomId }
+        { collection: 'dialogs', doc: props.match.params.roomId }
     ])
+    //проверяем изменение стейта, если запрос не успел пройти
+    
+    if(props.dialog && props.dialog.length >= 2){
+        return <div><Spin /></div>
+    }
     return (
         <div>
             <h3>Добро пожаловать в комнату</h3>
-            {props.rooms ?
-                props.rooms.map((r) => {
-                    return <div>
+            {props.dialog ?
+                props.dialog.map((r) => {
+                    return <div key={r.id}>
                         <h3>Room id: {r.id}</h3>
                         <h4>Creator: {r.creator}</h4>
             Users: {r.Users}
@@ -29,7 +35,7 @@ const Room = (props) => {
 let mapStateToProps = (state) => {
     return {
         myId: state.firebase.auth.uid,
-        rooms: state.firestore.ordered.rooms
+        dialog: state.firestore.ordered.dialogs
     }
 }
 

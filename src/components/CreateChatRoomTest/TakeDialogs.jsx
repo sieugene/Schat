@@ -1,22 +1,25 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { createChatRoom } from './../../redux/CreateChat';
+import { createChatRoom, checkDuplicateAndCreateRoom } from './../../redux/CreateChat';
 import { useFirestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { withRouter, NavLink } from 'react-router-dom';
 import CreateChatRoomTest from './CreateChatRoomTest';
+import { Spin } from 'antd';
 
 const creatorsRooms = 'creatorsRooms'
 const invitedRooms = 'invitedRooms'
 
 const TakeDialogs = (props) => {
-    //выдача чатов в которых я создатель
+
     useFirestoreConnect([
-        { collection: 'users' }
+        { collection: 'users'}
     ])
     useFirestoreConnect([
-        { collection: 'dialogs' }
+        { collection: 'dialogs'}
     ])
+    
+
     const getNameInDialog = (invited, creator) => {
         if (props.users.length !== 0) {
             if (invited === props.myId) {
@@ -42,30 +45,17 @@ const TakeDialogs = (props) => {
             <h2>id приглашенного: {m.invited}</h2>
             <b>Имя с кем диалог: {getNameInDialog(m.invited, m.creator)}</b>
             <br />
-            <NavLink to={'chat/' + m.id}>Ссылка</NavLink>
+            <NavLink to={'room/' + m.id}>Ссылка</NavLink>
         </div>
     })
     //проверка дублирования уже с имеющимися 
     const creatingChat = (value) => {
-        const shadowArray = result;
-        if (value.length >= 2) {
-            if (shadowArray) {
-                if (value !== props.myId) {
-                    let result = shadowArray.filter((room, index) => {
-                        return room.creator === value || room.invited === value
-                    })
-                    if (result.length === 0) {
-                        props.createChatRoom(props.myId, value)
-                    } else {
-                        alert('найден дубликат!')
-                    }
-                } else {
-                    alert('вы не можете создать диалог с самим собой!')
-                }
-            }
-        }
+        props.checkDuplicateAndCreateRoom(value,result)
     }
-    //testing
+    //loading
+    if(props.requestedData.users & props.requestedData.dialogs){
+        return <div><Spin /></div>
+    }
     return (
         <CreateChatRoomTest dialogs={mapping}
             myId={props.myId} createChatRoom={props.createChatRoom}
@@ -81,12 +71,14 @@ let mapStateToProps = (state) => {
         roomsInvited: state.firestore.ordered[invitedRooms],
         roomsCreators: state.firestore.ordered[creatorsRooms],
         users: state.firestore.ordered.users,
-        dialogs: state.firestore.ordered.dialogs
+        dialogs: state.firestore.ordered.dialogs,
+        requestedData: state.firestore.status.requesting
     }
 }
 
 export default compose(
     withRouter,
     connect(mapStateToProps, {
-        createChatRoom
+        createChatRoom,
+        checkDuplicateAndCreateRoom
     }))(TakeDialogs)
