@@ -1,12 +1,28 @@
 import React from 'react'
-import {MenuOutlined} from '@ant-design/icons'
+import { connect } from 'react-redux'
+import { checkDuplicateAndCreateRoom } from '../../../../redux/CreateChat'
+import ModalCreateDialog from '../../../Messages/ModalCreateDialog/ModalCreateDialog'
 
 const NavbarDialogs = (props) => {
+    const creatingChat = (value) => {
+        props.checkDuplicateAndCreateRoom(value, props.filteredDialogs)
+    }
     return (
         <div>
-            <MenuOutlined style={{fontSize: '18px'}}/>
+            <ModalCreateDialog
+                creatingChat={creatingChat}
+                users={props.users}/>
         </div>
     )
 }
 
-export default NavbarDialogs
+let mapStateToProps = (state) => {
+    return{
+        filteredDialogs: state.filtDialogs.filteredDialogs,
+        users: state.firestore.ordered.users
+    }
+}
+
+export default connect(mapStateToProps,{
+    checkDuplicateAndCreateRoom
+})(NavbarDialogs)

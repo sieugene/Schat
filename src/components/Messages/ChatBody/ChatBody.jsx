@@ -9,35 +9,31 @@ const ChatBody = (props) => {
 
     const sendingMessage = () => {
         const message = {
-            body: '',
+            body: value,
             createdAt: new Date(),
             uid: props.myId,
             messageType: 'text'
         }
-        props.sendMessageTC(message, props.match.params.roomId)
+        props.sendMessageTC(message, props.roomId)
     }
     ///
-    let messageType = 'img'
-    let message = 'https://avatars.mds.yandex.net/get-pdb/812271/3dfbb5ad-744e-4642-8b07-8ad07d847c84/s1200'
-    let profileUid = 1;
-    let id = 1;
-    let alignMessage = profileUid === id ? 'flex-end' : 'flex-start';
+    const alignMessage = (uid) => {
+        if(props.myId === uid){
+            return 'flex-end'
+        }else{
+            return 'flex-start'
+        }
+    }
     return (
         <>
-            <Message alignMessage={alignMessage} messageType={messageType}
-                message={message}
-            />
-            <h3>Добро пожаловать в комнату</h3>
-            {props.dialog ?
-                props.dialog.map((r) => {
-                    return <div key={r.id}>
-                        <h3>Room id: {r.id}</h3>
-                        <h4>Creator: {r.creator}</h4>
-            Users: {r.Users}
-                    </div>
+            {props.messages && props.messages.length >= 2 ?
+                props.messages.map((m) => {
+                    return <Message alignMessage={alignMessage(m.uid)} 
+                    messageType={m.messageType}
+                        message={m.body} key={m.id} />
                 })
                 :
-                ''
+                'no messages'
             }
             <input onChange={handleChange} value={value} />
             <button onClick={sendingMessage}>Send message</button>

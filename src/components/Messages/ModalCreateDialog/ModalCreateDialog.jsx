@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { setSubmitDisabledToggle } from '../../../redux/CreateChat';
 import { changeVisibleModal } from './../../../redux/CreateChat';
 import Button from './../../Button/Button';
+import { UserAddOutlined } from '@ant-design/icons';
 
 
 const { Search } = Input;
@@ -50,9 +51,8 @@ const ModalCreateDialog = (props) => {
     }
     return (
         <div>
-            <Button type="primary" onClick={showModal}>
-                Open Modal
-            </Button>
+            <UserAddOutlined onClick={showModal}
+                style={{ fontSize: '20px', alignItems: 'center' }} />
             <Modal
                 title="Создание чата"
                 visible={props.visibleModal}
@@ -62,24 +62,24 @@ const ModalCreateDialog = (props) => {
                     <Button key="back" onClick={handleCancel}>
                         Закрыть
                     </Button>,
-                    <Button key="submit" type="primary" onClick={handleOk} 
-                    disabled={props.submitDisabled}>
+                    <Button key="submit" type="primary" onClick={handleOk}
+                        disabled={props.submitDisabled}>
                         Создать
                     </Button>,
                 ]}>
                 {props.errors && <Alert message={props.errors} type="error" />}
-                <br/>
+                <br />
                 <Search placeholder="введите email"
                     onChange={handleChangeSearch}
-                    style={{ width: 200 }}/>
+                    style={{ width: 200 }} />
                 {users.length >= 1 &&
-                    <Select value={valueOption} 
-                    onChange={handleChangeValueOption}
+                    <Select value={valueOption}
+                        onChange={handleChangeValueOption}
                         style={{ width: '30%' }}>
                         <Option value={''} selected  ></Option>
                         {users && users.map((u) => {
-                            return <Option value={u.email} 
-                            key={u.id}>{u.email}</Option>
+                            return <Option value={u.email}
+                                key={u.id}>{u.email}</Option>
                         })}
                     </Select>
                 }

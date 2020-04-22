@@ -10,13 +10,19 @@ import { sendMessageTC } from './../../redux/messagesReducer';
 import { compose } from 'redux';
 
 const currentDialog = 'dialog'
+const messagesData = 'messages'
 
 const Messages = (props) => {
-
   useFirestoreConnect([
     {
       collection: 'dialogs', doc: props.match.params.roomId,
       storeAs: currentDialog
+    }
+  ])
+  useFirestoreConnect([
+    {
+      collection: `dialogs/${props.match.params.roomId}/messages`,
+      storeAs: messagesData
     }
   ])
   //
@@ -30,7 +36,11 @@ const Messages = (props) => {
           <HeaderMessages />
         </Row>
         <Row className="messages__body">
-          <ChatBody dialog={props.dialog} sendMessageTC={props.sendMessageTC}/>
+          <ChatBody dialog={props.dialog} sendMessageTC={props.sendMessageTC}
+          roomId={props.match.params.roomId}
+          messages={props.messages}
+          myId={props.myId}
+          />
         </Row>
       </div>
     </>
@@ -40,7 +50,8 @@ const Messages = (props) => {
 let mapStateToProps = (state) => {
   return {
     myId: state.firebase.auth.uid,
-    dialog: state.firestore.ordered[currentDialog]
+    dialog: state.firestore.ordered[currentDialog],
+    messages: state.firestore.ordered[messagesData]
   }
 }
 

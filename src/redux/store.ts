@@ -6,14 +6,16 @@ import firebase from 'firebase/app'
 import { createFirestoreInstance, firestoreReducer, getFirestore, reduxFirestore } from "redux-firestore";
 import authReducer from "./authReducer";
 import createChatReducer from "./CreateChat";
+import dialogsReducer from "./dialogsReducer";
 
 
 
 let reducers = combineReducers({
     auth: authReducer,
+    filtDialogs: dialogsReducer,
     createChat: createChatReducer,
     firebase: firebaseReducer,
-    firestore: firestoreReducer    
+    firestore: firestoreReducer  
 })
 
 type RootReducerType = typeof reducers;
