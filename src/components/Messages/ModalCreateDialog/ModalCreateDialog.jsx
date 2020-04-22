@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { Modal, Input, Select, Row, Col } from 'antd';
-import Button from './../Button/Button';
+import { Modal, Input, Select, Alert } from 'antd';
 import { connect } from 'react-redux';
-import { setSubmitDisabledToggle } from '../../redux/CreateChat';
-import { changeVisibleModal } from './../../redux/CreateChat';
+import { setSubmitDisabledToggle } from '../../../redux/CreateChat';
+import { changeVisibleModal } from './../../../redux/CreateChat';
+import Button from './../../Button/Button';
+
 
 const { Search } = Input;
 const { Option } = Select;
@@ -66,28 +67,22 @@ const ModalCreateDialog = (props) => {
                         Создать
                     </Button>,
                 ]}>
-                {props.erros && props.erros}
+                {props.errors && <Alert message={props.errors} type="error" />}
                 <br/>
-
-                <Search
-                    placeholder="введите email"
+                <Search placeholder="введите email"
                     onChange={handleChangeSearch}
-                    style={{ width: 200 }}
-                />
-
-
+                    style={{ width: 200 }}/>
                 {users.length >= 1 &&
-                    <Select value={valueOption} onChange={handleChangeValueOption}
+                    <Select value={valueOption} 
+                    onChange={handleChangeValueOption}
                         style={{ width: '30%' }}>
                         <Option value={''} selected  ></Option>
                         {users && users.map((u) => {
-                            return <Option value={u.email} key={u.id}>{u.email}</Option>
+                            return <Option value={u.email} 
+                            key={u.id}>{u.email}</Option>
                         })}
                     </Select>
                 }
-
-                <br />
-
             </Modal>
         </div>
     )
@@ -96,7 +91,7 @@ const ModalCreateDialog = (props) => {
 
 let mapStateToProps = (state) => {
     return {
-        erros: state.createChat.erros,
+        errors: state.createChat.errors,
         submitDisabled: state.createChat.submitDisabled,
         visibleModal: state.createChat.visibleModal
     }

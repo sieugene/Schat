@@ -1,25 +1,22 @@
 import React from 'react'
-import { UserOutlined } from '@ant-design/icons'
-import { Row, Col, Avatar } from 'antd'
+import ModalCreateDialog from '../../../Messages/ModalCreateDialog/ModalCreateDialog'
+
+
+
+
+
 
 const DialogUser = (props) => {
     return (
-        <>
-            <Col span={24} className='dialog__item'>
-                <Row>
-                    <Col>
-                        <Avatar size={30} icon={<UserOutlined />} />
-                    </Col>
-                    <Col>
-                        <h3 className='dialogs__username'><b>Dialog user</b></h3>
-                        <p className='dialogs__pastmessage'>past message</p>
-                    </Col>
-                </Row>
-
-            </Col>
-        </>
-
+        <div>
+            <h5>твой id: {props.myId}</h5>
+            <ModalCreateDialog
+                creatingChat={props.creatingChat}
+                users={props.users}/>
+            {props.dialogs}
+        </div>
     )
 }
+
 
 export default DialogUser

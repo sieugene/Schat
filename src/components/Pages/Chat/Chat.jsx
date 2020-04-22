@@ -2,6 +2,8 @@ import React from 'react';
 import { Row, Col } from 'antd';
 import Dialogs from '../../Dialogs/Dialogs';
 import Messages from '../../Messages/Messages';
+import { Route, withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 
 const Chat = (props) => {
     return (
@@ -12,7 +14,7 @@ const Chat = (props) => {
                     <Dialogs/>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Messages/>
+                     <Route path='/chat/dialog/:roomId' render={() => (<Messages/>)}/>
                 </Col>
               
             </Row>
@@ -20,4 +22,4 @@ const Chat = (props) => {
     )
 }
 
-export default Chat
+export default  compose(withRouter)(Chat)

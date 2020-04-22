@@ -2,7 +2,7 @@ const SET_ERRORS = 'CREATECHAT/SET_ERRORS'
 const SUBMIT_DISABLED = 'CREATECHAT/SUBMIT_DISABLED'
 const CHANGE_VISIBLE = 'CREATE/CHANGE_VISIBLE';
 let initialState = {
-    erros: [],
+    errors: undefined,
     submitDisabled: true,
     visibleModal: false
 }
@@ -13,7 +13,7 @@ const createChatReducer = (state = initialState, action) => {
         case SET_ERRORS:
             return {
                 ...state,
-                erros: action.erros
+                errors: action.errors
             }
         case SUBMIT_DISABLED:
             return {
@@ -32,10 +32,10 @@ const createChatReducer = (state = initialState, action) => {
 
 }
 
-export const setErrorsCreateChat = (erros) => {
+export const setErrorsCreateChat = (errors) => {
     return {
         type: SET_ERRORS,
-        erros
+        errors
     }
 }
 export const setSubmitDisabledToggle = (submitDisabled) => {
@@ -56,26 +56,24 @@ export const checkDuplicateAndCreateRoom = (userId, roomsArray) => {
         const myId = getState().firebase.auth.uid
         if (roomsArray && myId) {
             if (userId && userId.length >= 2) {
-                if (roomsArray) {
-                    if (userId !== myId) {
-                        let result = roomsArray.filter((room, index) => {
-                            return room.creator === userId || room.invited === userId
-                        })
-                        if (result.length === 0) {
-                            dispatch(createChatRoom(myId, userId));
-                            dispatch(changeVisibleModal(false));
-                        } else {
-                            dispatch(setErrorsCreateChat('У вас уже есть чат с этим пользователем!'));
-                            setTimeout(() => {
-                                dispatch(setErrorsCreateChat(undefined))
-                            }, 5000)
-                        }
+                if (userId !== myId) {
+                    let result = roomsArray.filter((room, index) => {
+                        return room.creator === userId || room.invited === userId
+                    })
+                    if (result.length === 0) {
+                        dispatch(createChatRoom(myId, userId));
+                        dispatch(changeVisibleModal(false));
                     } else {
-                        dispatch(setErrorsCreateChat('Вы не можете создать диалог с самим собой!'));
+                        dispatch(setErrorsCreateChat('У вас уже есть чат с этим пользователем!'));
                         setTimeout(() => {
                             dispatch(setErrorsCreateChat(undefined))
                         }, 5000)
                     }
+                } else {
+                    dispatch(setErrorsCreateChat('Вы не можете создать диалог с самим собой!'));
+                    setTimeout(() => {
+                        dispatch(setErrorsCreateChat(undefined))
+                    }, 5000)
                 }
             }
 
