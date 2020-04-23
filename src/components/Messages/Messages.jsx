@@ -8,6 +8,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { sendMessageTC } from './../../redux/messagesReducer';
 import { compose } from 'redux';
+import SendFormMessages from './SendForm/SendFormMessages';
 
 const currentDialog = 'dialog'
 const messagesData = 'messages'
@@ -22,6 +23,9 @@ const Messages = (props) => {
   useFirestoreConnect([
     {
       collection: `dialogs/${props.match.params.roomId}/messages`,
+      orderBy: [
+        ['createdAt'],
+      ],
       storeAs: messagesData
     }
   ])
@@ -41,6 +45,9 @@ const Messages = (props) => {
           messages={props.messages}
           myId={props.myId}
           />
+        </Row>
+        <Row className="messages__sendforms">
+          <SendFormMessages/>
         </Row>
       </div>
     </>
