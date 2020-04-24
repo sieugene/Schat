@@ -3,11 +3,10 @@ import './SendFormMessages.scss'
 import { Input, Col, Row } from 'antd';
 import { FileImageOutlined, SmileOutlined, SendOutlined } from '@ant-design/icons';
 import AudioRecorder from './AudioRecorder/AudioRecorder';
-import { sendMessageTC } from './../../../redux/messagesReducer';
+import { sendMessageTC, sendAudioMessageTC } from './../../../redux/messagesReducer';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-import { useFirebase } from 'react-redux-firebase';
 const { TextArea } = Input;
 
 const SendFormMessages = (props) => {
@@ -26,35 +25,8 @@ const SendFormMessages = (props) => {
         props.sendMessageTC(message, props.match.params.roomId);
         setValue('');
     }
-    //---------------------------------------------------------
-    //отправка файла
-    //коллбэк функция, принимает файл и отправит его
-    const firebase = useFirebase()
-    function addTestFile(file) {
-        const storageRef = firebase.storage().ref()
-        const fileRef = storageRef.child('dialogs/test.webm')
-        return fileRef.put(file).then((response) => {
-            console.log(response.metadata.bucket + response.metadata.fullPath)
-            debugger
-        })
-    }
-    //получение данных из storage
-    const getFiles = () => {
-        //получение списка файлов
-        const testStorage = firebase.storage().ref();
-        testStorage.child('dialogs').listAll().then((response) => {
-            debugger
-        })
-        //получение ссылки конкретного файла
-        testStorage.child('dialogs/test.webm').getDownloadURL().then((resp) => {
-            debugger
-            console.log(resp)
-        })
-    }
-    //---------------------------------------------------------
     return (
         <Col span={24}>
-            <button onClick={getFiles}>get files</button>
             <Row>
                 <Col span={22}>
                     <TextArea
@@ -77,7 +49,10 @@ const SendFormMessages = (props) => {
                         />
                         :
                         <AudioRecorder style={{ fontSize: '20px' }} 
-                        addTestFile={addTestFile}
+                        addTestFile={props.sendAudioMessageTC}
+                        dialogId={props.match.params.roomId}
+                        myId={props.myId}
+                        //заменить слово addTestFile на sendAudioMessageTC
                         />
                     }
 
@@ -96,5 +71,6 @@ let mapStateToProps = (state) => {
 export default compose(
     withRouter,
     connect(mapStateToProps, {
-        sendMessageTC
+        sendMessageTC,
+        sendAudioMessageTC
     }))(SendFormMessages)

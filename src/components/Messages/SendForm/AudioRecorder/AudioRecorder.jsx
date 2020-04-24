@@ -51,7 +51,7 @@ export default class AudioRecorder extends Component {
                 })
                 console.log("succ stop", e)
                 //sending audio file
-                this.props.addTestFile(e);
+                this.props.addTestFile(e,this.props.myId,this.props.dialogId);
                 //thunk server
                 this.controlAudio("");
             },
