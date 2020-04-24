@@ -50,6 +50,8 @@ export default class AudioRecorder extends Component {
                     audioSrc: window.URL.createObjectURL(e)
                 })
                 console.log("succ stop", e)
+                //sending audio file
+                this.props.addTestFile(e);
                 //thunk server
                 this.controlAudio("");
             },

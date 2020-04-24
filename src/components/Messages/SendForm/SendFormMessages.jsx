@@ -7,6 +7,7 @@ import { sendMessageTC } from './../../../redux/messagesReducer';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+import { useFirebase } from 'react-redux-firebase';
 const { TextArea } = Input;
 
 const SendFormMessages = (props) => {
@@ -14,7 +15,7 @@ const SendFormMessages = (props) => {
     const handleChange = (e) => {
         setValue(e.target.value)
     }
-
+    
     const sendingMessage = () => {
         const message = {
             body: typingValue,
@@ -25,8 +26,35 @@ const SendFormMessages = (props) => {
         props.sendMessageTC(message, props.match.params.roomId);
         setValue('');
     }
+    //---------------------------------------------------------
+    //отправка файла
+    //коллбэк функция, принимает файл и отправит его
+    const firebase = useFirebase()
+    function addTestFile(file) {
+        const storageRef = firebase.storage().ref()
+        const fileRef = storageRef.child('dialogs/test.webm')
+        return fileRef.put(file).then((response) => {
+            console.log(response.metadata.bucket + response.metadata.fullPath)
+            debugger
+        })
+    }
+    //получение данных из storage
+    const getFiles = () => {
+        //получение списка файлов
+        const testStorage = firebase.storage().ref();
+        testStorage.child('dialogs').listAll().then((response) => {
+            debugger
+        })
+        //получение ссылки конкретного файла
+        testStorage.child('dialogs/test.webm').getDownloadURL().then((resp) => {
+            debugger
+            console.log(resp)
+        })
+    }
+    //---------------------------------------------------------
     return (
         <Col span={24}>
+            <button onClick={getFiles}>get files</button>
             <Row>
                 <Col span={22}>
                     <TextArea
@@ -48,7 +76,9 @@ const SendFormMessages = (props) => {
                             onClick={sendingMessage}
                         />
                         :
-                        <AudioRecorder style={{ fontSize: '20px' }} />
+                        <AudioRecorder style={{ fontSize: '20px' }} 
+                        addTestFile={addTestFile}
+                        />
                     }
 
                 </Col>
