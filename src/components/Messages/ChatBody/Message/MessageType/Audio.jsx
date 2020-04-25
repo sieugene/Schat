@@ -1,6 +1,7 @@
 import React, { useState} from 'react';
 import './Audio.scss'
 import { useFirebase } from 'react-redux-firebase';
+import AudioWithWaves from './NewAudio';
 
 
 export default Audio = (props) => {
@@ -21,8 +22,12 @@ export default Audio = (props) => {
     return (
         <div className={'voicemessage container'}>
             <audio src={audio} controls controlsList="nodownload">
-
             </audio>
+            {/* <div className='messagebody'>
+            <AudioWithWaves srcAudio={audio}/>
+            </div> */
+            //cors troubles
+            }
         </div>
     )
 }
