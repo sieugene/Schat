@@ -2,10 +2,12 @@ const SEND_AUDIO_MESSAGE = 'MESSAGES/SEND_AUDIO_MESSAGE'
 const SET_IMG_PREVIEW = 'MESSAGES/SET_IMG_PREVIEW'
 const SET_AUDIO_MESSAGE = 'MESSAGES/SET_AUDIO_MESSAGE'
 const SET_IMG_FILE = 'MESSAGES/SET_IMG_FILE';
+const REMOVE_IMAGE = 'MESSAGES/REMOVE_IMAGE'
 let initialState = {
     previewImg: null,
     audioRecording: false,
-    imgFile: null
+    imgFile: null,
+    removeImage: false
 }
 
 
@@ -25,6 +27,11 @@ const messagesReducer = (state = initialState, action) => {
             return {
                 ...state,
                 imgFile: action.imgFile
+            }
+        case REMOVE_IMAGE:
+            return {
+                ...state,
+                removeImage: action.removeImage
             }
         default:
             return state
@@ -105,16 +112,22 @@ export const setImagePreviewUrlAC = (previewImg) => {
         previewImg
     }
 }
-export const setAudioMessageAC = (audioRecording) => {
+export const setImageFileAC = (imgFile) => {
     return {
-        type: SET_AUDIO_MESSAGE,
-        audioRecording
+        type: SET_IMG_FILE,
+        imgFile
     }
 }
-export const setImageFileAC = (imgFile) => {
+export const removeImageAC = (removeImage) => {
+    return {
+        type: REMOVE_IMAGE,
+        removeImage
+    }
+}
+export const setAudioMessageAC = (audioRecording) => {
         return {
-            type: SET_IMG_FILE,
-            imgFile
+            type: SET_AUDIO_MESSAGE,
+            audioRecording
         }
     }
     //

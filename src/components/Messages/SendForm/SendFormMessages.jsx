@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import './SendFormMessages.scss'
 import { Input, Col, Row } from 'antd';
-import { FileImageOutlined, SmileOutlined, SendOutlined } from '@ant-design/icons';
+import { SmileOutlined, SendOutlined } from '@ant-design/icons';
 import AudioRecorder from './AudioRecorder/AudioRecorder';
-import { sendMessageTC, sendAudioMessageTC, sendImageMessageTC, setImagePreviewUrlAC, setAudioMessageAC, setImageFileAC } from './../../../redux/messagesReducer';
+import { sendMessageTC, sendAudioMessageTC, sendImageMessageTC, setImagePreviewUrlAC, setAudioMessageAC, setImageFileAC, removeImageAC } from './../../../redux/messagesReducer';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import ImageUpload from './ImageLoader/ImageLoader';
+import ImagePreview from './ImageLoader/ImagePreview';
 const { TextArea } = Input;
 
 const SendFormMessages = (props) => {
@@ -32,15 +33,14 @@ const SendFormMessages = (props) => {
                 <Col span={22}>
                     <div contentEditable={false} >
                         {props.audioRecording ? '' :
-                            <>
-                                <TextArea
-                                    placeholder="Начните писать сообщение..."
-                                    autoSize={{ minRows: 2, maxRows: 4 }}
-                                    onChange={handleChange} value={typingValue} />
-                            </>
+                            <TextArea placeholder="Начните писать сообщение..."
+                                autoSize={{ minRows: 2, maxRows: 4 }}
+                                onChange={handleChange} value={typingValue} />
                         }
                         <div className="img__preview">
-                            {props.previewImg && <img src={props.previewImg} />}
+                            {props.previewImg && <ImagePreview previewImg={props.previewImg}
+                                removeImageAC={props.removeImageAC}
+                            />}
                         </div>
                     </div>
                 </Col>
@@ -52,6 +52,8 @@ const SendFormMessages = (props) => {
                             myId={props.myId}
                             setImagePreviewUrlAC={props.setImagePreviewUrlAC}
                             setImageFileAC={props.setImageFileAC}
+                            removeImage={props.removeImage}
+                            removeImageAC={props.removeImageAC}
                         />
                         <SmileOutlined style={{ fontSize: '20px' }} />
                     </div>
@@ -67,23 +69,20 @@ const SendFormMessages = (props) => {
                                 )
                             }}
                         />
-
                         :
                         typingValue.length >= 1 ?
                             <SendOutlined style={{ fontSize: '20px' }}
                                 onClick={sendingMessage}
                             />
                             :
-                            <AudioRecorder style={{ fontSize: '20px' }}
-                                addTestFile={props.sendAudioMessageTC}
+                            <AudioRecorder
+                                sendAudioMessageTC={props.sendAudioMessageTC}
                                 dialogId={props.match.params.roomId}
                                 myId={props.myId}
                                 setAudioMessageAC={props.setAudioMessageAC}
                                 audioRecording={props.audioRecording}
-                            //заменить слово addTestFile на sendAudioMessageTC
                             />
                     }
-
                 </Col>
             </Row>
         </Col>
@@ -95,7 +94,8 @@ let mapStateToProps = (state) => {
         myId: state.firebase.auth.uid,
         previewImg: state.sendMessages.previewImg,
         audioRecording: state.sendMessages.audioRecording,
-        imgFile: state.sendMessages.imgFile
+        imgFile: state.sendMessages.imgFile,
+        removeImage: state.sendMessages.removeImage
     }
 }
 
@@ -107,5 +107,6 @@ export default compose(
         sendImageMessageTC,
         setImagePreviewUrlAC,
         setAudioMessageAC,
-        setImageFileAC
+        setImageFileAC,
+        removeImageAC
     }))(SendFormMessages)

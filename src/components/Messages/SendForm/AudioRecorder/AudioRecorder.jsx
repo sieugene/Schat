@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import AudioAnalyser from "react-audio-analyser"
-import { PauseCircleOutlined, AudioOutlined, SendOutlined } from "@ant-design/icons";
+import { AudioOutlined, SendOutlined, CloseOutlined } from "@ant-design/icons";
 import './AduioRecorder.scss'
 import { Row, Col } from 'antd';
-import Audio from './../../ChatBody/Message/MessageType/Audio';
 
 
 
@@ -11,29 +10,25 @@ export default class AudioRecorder extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            status: ""
+            status: "",
+            fastRerender: false
         }
     }
-
-    componentDidMount() {
-    }
-
     controlAudio(status) {
         this.setState({
             status
         })
     }
-
-    changeScheme(e) {
+    cancelRecording(){
+        this.controlAudio("");
+        this.props.setAudioMessageAC(false);
         this.setState({
-            audioType: e.target.value
+            fastRerender: true
         })
     }
-
     render() {
-        const { status, audioSrc, audioType } = this.state;
+        const { status, audioSrc } = this.state;
         const audioProps = {
-            audioType,
             // audioOptions: {sampleRate: 30000}, // 设置输出音频采样率
             status,
             backgroundColor: 'rgba(255, 0, 0, 1)',
@@ -41,44 +36,29 @@ export default class AudioRecorder extends Component {
             timeslice: 1000,
             startCallback: (e) => {
                 console.log("succ start", e)
-            },
-            pauseCallback: (e) => {
-                console.log("succ pause", e)
+                this.props.setAudioMessageAC(true)
             },
             stopCallback: (e) => {
                 this.setState({
                     audioSrc: window.URL.createObjectURL(e)
                 })
-                console.log("succ stop", e)
-                //sending audio file
-                this.props.addTestFile(e, this.props.myId, this.props.dialogId);
-                //thunk server
+                this.props.sendAudioMessageTC(e, this.props.myId, this.props.dialogId);
                 this.controlAudio("");
-            },
-            onRecordCallback: (e) => {
-                console.log("recording", e)
-            },
-            errorCallback: (err) => {
-                console.log("error", err)
+                this.props.setAudioMessageAC(false)
             }
         }
-        //объвление о том что запись идет или остановлена
-        if (status === "recording") {
-            this.props.setAudioMessageAC(true)
-        }
-        if (status === "inactive") {
-            this.props.setAudioMessageAC(false)
-        }
-        //
-        const statusPaused = status === "recording";
-        const statusRecording = status === "" || status === "paused";
-        const statusForGraph = status === "recording" || status === "paused";
-        const toggleGraph = statusForGraph ? 'showGraph' : 'hideGraph';
-
+        const statusRecording = status === "recording";
+        const toggleGraph = statusRecording ? 'showGraph' : 'hideGraph';
         const showOneButton = this.props.audioRecording ? 'showAudioForm' : 'hideAudioForm';
+        //полный перезапуск
+        if(this.state.fastRerender){
+            this.setState({
+                fastRerender: false
+            })
+            return ''
+        }
         return (
             <div>
-                {/* спрашиваем началась ли запись, для того чтобы отобразить, лишь иконка */}
                 {showOneButton === 'showAudioForm' ? '' :
                     <AudioOutlined onClick={() => this.controlAudio("recording")}
                         style={{ fontSize: '24px', color: '#08c' }}
@@ -87,13 +67,8 @@ export default class AudioRecorder extends Component {
                 <Row className={showOneButton}>
                     <Col span="4">
                         {statusRecording &&
-                            <AudioOutlined onClick={() => this.controlAudio("recording")}
-                                style={{ fontSize: '24px', color: '#08c' }}
-                            />
-                        }
-                        {statusPaused &&
-                            <PauseCircleOutlined style={{ fontSize: '24px', color: '#08c' }}
-                                onClick={() => this.controlAudio("paused")}
+                            <CloseOutlined  style={{ fontSize: '24px', color: '#08c' }}
+                                onClick={() => this.cancelRecording()}
                             />
                         }
                     </Col>
@@ -103,17 +78,12 @@ export default class AudioRecorder extends Component {
                         </div>
                     </Col>
                     <Col span="4" offset="4">
-                        {status === "recording" &&
+                        {statusRecording &&
                             <SendOutlined style={{ fontSize: '24px', color: '#08c' }}
                                 onClick={() => this.controlAudio("inactive")} />
                         }
                     </Col>
                 </Row>
-                {/* <select name="" id="" onChange={(e) => this.changeScheme(e)} value={audioType}>
-                    <option value="audio/webm">audio/webm（default）</option>
-                    <option value="audio/wav">audio/wav</option>
-                    <option value="audio/mp3">audio/mp3</option>
-                </select> */}
             </div>
         );
     }
