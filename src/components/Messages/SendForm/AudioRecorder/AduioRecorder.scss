@@ -39,3 +39,13 @@
         cursor: pointer;
     }
 }
+
+.showAudioForm {
+    visibility: visible !important;
+    position: relative !important;
+}
+
+.hideAudioForm {
+    visibility: hidden;
+    position: absolute;
+}

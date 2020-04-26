@@ -51,7 +51,7 @@ export default class AudioRecorder extends Component {
                 })
                 console.log("succ stop", e)
                 //sending audio file
-                this.props.addTestFile(e,this.props.myId,this.props.dialogId);
+                this.props.addTestFile(e, this.props.myId, this.props.dialogId);
                 //thunk server
                 this.controlAudio("");
             },
@@ -62,13 +62,29 @@ export default class AudioRecorder extends Component {
                 console.log("error", err)
             }
         }
+        //объвление о том что запись идет или остановлена
+        if (status === "recording") {
+            this.props.setAudioMessageAC(true)
+        }
+        if (status === "inactive") {
+            this.props.setAudioMessageAC(false)
+        }
+        //
         const statusPaused = status === "recording";
         const statusRecording = status === "" || status === "paused";
         const statusForGraph = status === "recording" || status === "paused";
         const toggleGraph = statusForGraph ? 'showGraph' : 'hideGraph';
+
+        const showOneButton = this.props.audioRecording ? 'showAudioForm' : 'hideAudioForm';
         return (
             <div>
-                <Row>
+                {/* спрашиваем началась ли запись, для того чтобы отобразить, лишь иконка */}
+                {showOneButton === 'showAudioForm' ? '' :
+                    <AudioOutlined onClick={() => this.controlAudio("recording")}
+                        style={{ fontSize: '24px', color: '#08c' }}
+                    />
+                }
+                <Row className={showOneButton}>
                     <Col span="4">
                         {statusRecording &&
                             <AudioOutlined onClick={() => this.controlAudio("recording")}

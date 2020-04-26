@@ -7,6 +7,7 @@ import { createFirestoreInstance, firestoreReducer, getFirestore, reduxFirestore
 import authReducer from "./authReducer";
 import createChatReducer from "./CreateChat";
 import dialogsReducer from "./dialogsReducer";
+import messagesReducer from "./messagesReducer";
 
 
 
@@ -14,6 +15,7 @@ let reducers = combineReducers({
     auth: authReducer,
     filtDialogs: dialogsReducer,
     createChat: createChatReducer,
+    sendMessages: messagesReducer,
     firebase: firebaseReducer,
     firestore: firestoreReducer  
 })

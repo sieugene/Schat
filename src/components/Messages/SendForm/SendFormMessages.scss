@@ -1,4 +1,10 @@
 .messages__sendforms {
+    .img__preview {
+        overflow: hidden;
+        img {
+            height: 100px;
+        }
+    }
     textarea {
         padding-right: 65px;
     }
