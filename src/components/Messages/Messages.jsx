@@ -37,7 +37,9 @@ const Messages = (props) => {
     <>
       <div className="messages">
         <Row className="messages__header">
-          <HeaderMessages />
+          <HeaderMessages dialog={props.dialog}
+          myId={props.myId}
+          />
         </Row>
         <Row className="messages__body">
           <ChatBody dialog={props.dialog} sendMessageTC={props.sendMessageTC}
