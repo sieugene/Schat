@@ -19,7 +19,7 @@ export default class AudioRecorder extends Component {
             status
         })
     }
-    cancelRecording(){
+    cancelRecording() {
         this.controlAudio("");
         this.props.setAudioMessageAC(false);
         this.setState({
@@ -31,7 +31,8 @@ export default class AudioRecorder extends Component {
         const audioProps = {
             // audioOptions: {sampleRate: 30000}, // 设置输出音频采样率
             status,
-            backgroundColor: 'rgba(255, 0, 0, 1)',
+            backgroundColor: '#f7f7f7',
+            strokeColor: '#000000b5',
             audioSrc,
             timeslice: 1000,
             startCallback: (e) => {
@@ -51,28 +52,30 @@ export default class AudioRecorder extends Component {
         const toggleGraph = statusRecording ? 'showGraph' : 'hideGraph';
         const showOneButton = this.props.audioRecording ? 'showAudioForm' : 'hideAudioForm';
         //полный перезапуск
-        if(this.state.fastRerender){
+        if (this.state.fastRerender) {
             this.setState({
                 fastRerender: false
             })
             return ''
         }
         return (
-            <div>
+            <>
                 {showOneButton === 'showAudioForm' ? '' :
-                    <AudioOutlined onClick={() => this.controlAudio("recording")}
-                        style={{ fontSize: '24px', color: '#08c' }}
-                    />
+                    <div className="sendButton">
+                        <AudioOutlined onClick={() => this.controlAudio("recording")}
+                            style={{ fontSize: '24px', color: '#08c' }}
+                        />
+                    </div>
                 }
                 <Row className={showOneButton}>
-                    <Col span="4">
+                    <Col span="4" offset="4">
                         {statusRecording &&
-                            <CloseOutlined  style={{ fontSize: '24px', color: '#08c' }}
+                            <CloseOutlined style={{ fontSize: '24px', color: '#08c' }}
                                 onClick={() => this.cancelRecording()}
                             />
                         }
                     </Col>
-                    <Col span="12">
+                    <Col span="8">
                         <div className={toggleGraph}>
                             <AudioAnalyser {...audioProps} />
                         </div>
@@ -84,7 +87,7 @@ export default class AudioRecorder extends Component {
                         }
                     </Col>
                 </Row>
-            </div>
+            </>
         );
     }
 }

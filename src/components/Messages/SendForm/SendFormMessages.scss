@@ -1,6 +1,7 @@
 .messages__sendforms {
     .img__preview {
         overflow: hidden;
+        position: absolute;
         img {
             height: 100px;
         }

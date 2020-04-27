@@ -44,36 +44,42 @@ const SendFormMessages = (props) => {
                         </div>
                     </div>
                 </Col>
-                <div className="sendMethods">
-                    <div className="sendMethods-items">
-                        <ImageUpload
-                            sendImageMessageTC={props.sendImageMessageTC}
-                            dialogId={props.match.params.roomId}
-                            myId={props.myId}
-                            setImagePreviewUrlAC={props.setImagePreviewUrlAC}
-                            setImageFileAC={props.setImageFileAC}
-                            removeImage={props.removeImage}
-                            removeImageAC={props.removeImageAC}
-                        />
-                        <SmileOutlined style={{ fontSize: '20px' }} />
+                {props.audioRecording ? '' :
+                    <div className="sendMethods">
+                        <div className="sendMethods-items">
+                            <ImageUpload
+                                sendImageMessageTC={props.sendImageMessageTC}
+                                dialogId={props.match.params.roomId}
+                                myId={props.myId}
+                                setImagePreviewUrlAC={props.setImagePreviewUrlAC}
+                                setImageFileAC={props.setImageFileAC}
+                                removeImage={props.removeImage}
+                                removeImageAC={props.removeImageAC}
+                            />
+                            <SmileOutlined style={{ fontSize: '20px' }} />
+                        </div>
                     </div>
-                </div>
-                <Col>
+                }
+                <Col span={props.audioRecording ? 24 : 2}>
                     {props.previewImg ?
-                        <SendOutlined style={{ fontSize: '20px', color: 'red' }}
-                            onClick={() => {
-                                props.sendImageMessageTC(
-                                    props.imgFile,
-                                    props.myId,
-                                    props.match.params.roomId
-                                )
-                            }}
-                        />
+                        <div className="sendButton">
+                            <SendOutlined style={{ fontSize: '20px', color: 'red' }}
+                                onClick={() => {
+                                    props.sendImageMessageTC(
+                                        props.imgFile,
+                                        props.myId,
+                                        props.match.params.roomId
+                                    )
+                                }}
+                            />
+                        </div>
                         :
                         typingValue.length >= 1 ?
-                            <SendOutlined style={{ fontSize: '20px' }}
-                                onClick={sendingMessage}
-                            />
+                            <div className="sendButton">
+                                <SendOutlined style={{ fontSize: '20px' }}
+                                    onClick={sendingMessage}
+                                />
+                            </div>
                             :
                             <AudioRecorder
                                 sendAudioMessageTC={props.sendAudioMessageTC}
