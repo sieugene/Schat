@@ -87,7 +87,8 @@ export const createChatRoom = (myId, userId) => {
         firestore.collection('dialogs').add({
             Users: 0,
             creator: myId,
-            invited: userId
+            invited: userId,
+            lastMessage: ''
         }).then((resp) => {
             firestore.collection(`dialogs/${resp.id}/messages`).add({})
         })

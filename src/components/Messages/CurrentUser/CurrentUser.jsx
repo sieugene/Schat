@@ -1,6 +1,7 @@
 import React from 'react'
 import { getNameInDialog, userIsOnline } from './../../Dialogs/ListDialogs/HelperDialog';
 
+
 const CurrentUser = (props) => {
     return (
         <div>

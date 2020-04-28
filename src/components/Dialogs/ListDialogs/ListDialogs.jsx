@@ -24,7 +24,7 @@ const ListDialogs = (props) => {
             return t.creator === props.myId || t.invited === props.myId
         })
         props.setFilteredDialogsAC(filter)
-         // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.dialogs])
 
     const mapping = props.filteredDialogs && props.filteredDialogs.map((m) => {
@@ -32,6 +32,7 @@ const ListDialogs = (props) => {
             creator={m.creator}
             users={props.users}
             myId={props.myId}
+            lastMessage={m.lastMessage}
         />
     })
     //loading
@@ -40,7 +41,7 @@ const ListDialogs = (props) => {
     }
     return (
         <DialogUser dialogs={mapping}
-            myId={props.myId} 
+            myId={props.myId}
             users={props.users}
         />
     )

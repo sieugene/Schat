@@ -8,13 +8,15 @@ const Dialogs = (props) => {
     return (
         <div className="dialogs">
             <Row justify="space-between" className='header__dialogs'>
-                <HeaderDialogs/>
+                <HeaderDialogs />
             </Row>
             <Row className='SearchDialogs__dialogs'>
-                <SearchDialogs/>
+                <SearchDialogs />
             </Row>
             <Row className='ListDialogs__dialogs'>
-                <ListDialogs/>
+                <div className="ListDialogs__dialogs__height">
+                    <ListDialogs />
+                </div>
             </Row>
         </div>
     )

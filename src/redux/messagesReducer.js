@@ -57,7 +57,6 @@ export const sendAudioMessageTC = (file, myId, dialogId) => {
         const fileRef = storageRef.child(`dialogs/${generateName}.webm`)
         return fileRef.put(file).then((response) => {
             console.log('отправка произошла, вот путь:', response.metadata.fullPath)
-            debugger
             const message = {
                 body: response.metadata.fullPath,
                 createdAt: new Date(),
@@ -76,7 +75,6 @@ export const sendImageMessageTC = (file, myId, dialogId) => {
         const fileRef = storageRef.child(`dialogs/${generateName}`)
         return fileRef.put(file).then((response) => {
             console.log('отправка произошла, вот путь:', response.metadata.fullPath)
-            debugger
             const message = {
                 body: response.metadata.fullPath,
                 createdAt: new Date(),
@@ -96,11 +94,27 @@ export const sendMessageTC = (message, dialogId) => {
         firestore.collection(`dialogs/${dialogId}/messages`).add({
             ...message
         }).then((resp) => {
-            debugger
+            dispatch(setLastMessageTC(message, dialogId));
         }).catch((err) => {
             console.log(err)
-            debugger
-
+        })
+    }
+}
+export const setLastMessageTC = (message, dialogId) => {
+    return (dispatch, getState, { getFirebase, getFirestore }) => {
+        const firestore = getFirestore();
+        let lastMessage;
+        if (message.messageType === 'img') {
+            lastMessage = 'изображение'
+        } else if (message.messageType === 'audio') {
+            lastMessage = 'голосовое сообщение'
+        } else {
+            lastMessage = message.body
+        }
+        firestore.collection(`dialogs/`).doc(dialogId).update({
+            lastMessage: lastMessage
+        }).then((resp) => {}).catch((err) => {
+            console.log(err)
         })
     }
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Spin } from 'antd';
+import { Row, Spin, Alert } from 'antd';
 import HeaderMessages from './Header/HeaderMessages';
 import ChatBody from './ChatBody/ChatBody';
 import './Messages.scss'
@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { sendMessageTC } from './../../redux/messagesReducer';
 import { compose } from 'redux';
 import SendFormMessages from './SendForm/SendFormMessages';
+import { chatAccess } from './MessagesHelper/MessagesHelper';
 
 const currentDialog = 'dialog'
 const messagesData = 'messages'
@@ -29,27 +30,30 @@ const Messages = (props) => {
       storeAs: messagesData
     }
   ])
-  //
   if (!props.dialog) {
     return <div><Spin /></div>
+  } else if (chatAccess(props.dialog, props.myId)) {
+    return <Alert message="У вас нет доступа" type="error" />
   }
   return (
     <>
       <div className="messages">
         <Row className="messages__header">
           <HeaderMessages dialog={props.dialog}
-          myId={props.myId}
+            myId={props.myId}
           />
         </Row>
         <Row className="messages__body">
-          <ChatBody dialog={props.dialog} sendMessageTC={props.sendMessageTC}
-          roomId={props.match.params.roomId}
-          messages={props.messages}
-          myId={props.myId}
-          />
+          <div className="messages__body__height">
+            <ChatBody dialog={props.dialog} sendMessageTC={props.sendMessageTC}
+              roomId={props.match.params.roomId}
+              messages={props.messages}
+              myId={props.myId}
+            />
+          </div>
         </Row>
         <Row className="messages__sendforms">
-          <SendFormMessages/>
+          <SendFormMessages />
         </Row>
       </div>
     </>

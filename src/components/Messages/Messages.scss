@@ -10,9 +10,12 @@
         padding-top: 20px;
         z-index: 0;
         padding-bottom: 20px;
-        height: 80vh;
         overflow: auto;
         background-color: #f7f7f7;
+        .messages__body__height {
+            height: 80vh;
+            width: 100%;
+        }
     }
     .messages__sendforms {
         padding-top: 15px;

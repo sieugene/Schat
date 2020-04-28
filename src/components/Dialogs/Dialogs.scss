@@ -21,7 +21,10 @@
     .ListDialogs__dialogs {
         background-color: #ffffff;
         @include paddings__dialogs();
-        height: 90vh;
         overflow: auto;
+        .ListDialogs__dialogs__height {
+            height: 80vh;
+            width: 100%;
+        }
     }
 }
