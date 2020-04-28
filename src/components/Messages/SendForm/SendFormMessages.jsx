@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './SendFormMessages.scss'
 import { Input, Col, Row } from 'antd';
-import { SmileOutlined, SendOutlined } from '@ant-design/icons';
+import { SendOutlined } from '@ant-design/icons';
 import AudioRecorder from './AudioRecorder/AudioRecorder';
 import { sendMessageTC, sendAudioMessageTC, sendImageMessageTC, setImagePreviewUrlAC, setAudioMessageAC, setImageFileAC, removeImageAC } from './../../../redux/messagesReducer';
 import { connect } from 'react-redux';
@@ -9,6 +9,8 @@ import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import ImageUpload from './ImageLoader/ImageLoader';
 import ImagePreview from './ImageLoader/ImagePreview';
+import EmojiPicker from './EmojiPicker/EmojiPicker';
+import TextAreaCustom from './TextAreaCustom/TextAreaCustom';
 const { TextArea } = Input;
 
 const SendFormMessages = (props) => {
@@ -35,13 +37,16 @@ const SendFormMessages = (props) => {
                         {props.audioRecording ? '' :
                             <TextArea placeholder="Начните писать сообщение..."
                                 autoSize={{ minRows: 2, maxRows: 4 }}
-                                onChange={handleChange} value={typingValue} />
+                                onChange={handleChange} value={typingValue} 
+                                />
                         }
                         <div className="img__preview">
                             {props.previewImg && <ImagePreview previewImg={props.previewImg}
                                 removeImageAC={props.removeImageAC}
                             />}
                         </div>
+                        <TextAreaCustom typingValue={typingValue}
+                        />
                     </div>
                 </Col>
                 {props.audioRecording ? '' :
@@ -56,7 +61,10 @@ const SendFormMessages = (props) => {
                                 removeImage={props.removeImage}
                                 removeImageAC={props.removeImageAC}
                             />
-                            <SmileOutlined style={{ fontSize: '20px' }} />
+                            <EmojiPicker
+                                typingValue={typingValue}
+                                setValue={setValue}
+                            />
                         </div>
                     </div>
                 }
