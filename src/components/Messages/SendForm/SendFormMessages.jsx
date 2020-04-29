@@ -9,7 +9,6 @@ import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import ImageUpload from './ImageLoader/ImageLoader';
 import ImagePreview from './ImageLoader/ImagePreview';
-import EmojiPicker from './EmojiPicker/EmojiPicker';
 import TextAreaCustom from './TextAreaCustom/TextAreaCustom';
 const { TextArea } = Input;
 
@@ -35,18 +34,15 @@ const SendFormMessages = (props) => {
                 <Col span={22}>
                     <div contentEditable={false} >
                         {props.audioRecording ? '' :
-                            <TextArea placeholder="Начните писать сообщение..."
-                                autoSize={{ minRows: 2, maxRows: 4 }}
-                                onChange={handleChange} value={typingValue} 
-                                />
+                            <TextAreaCustom typingValue={typingValue}
+                                setValue={setValue}
+                            />
                         }
                         <div className="img__preview">
                             {props.previewImg && <ImagePreview previewImg={props.previewImg}
                                 removeImageAC={props.removeImageAC}
                             />}
                         </div>
-                        <TextAreaCustom typingValue={typingValue}
-                        />
                     </div>
                 </Col>
                 {props.audioRecording ? '' :
@@ -60,10 +56,6 @@ const SendFormMessages = (props) => {
                                 setImageFileAC={props.setImageFileAC}
                                 removeImage={props.removeImage}
                                 removeImageAC={props.removeImageAC}
-                            />
-                            <EmojiPicker
-                                typingValue={typingValue}
-                                setValue={setValue}
                             />
                         </div>
                     </div>
