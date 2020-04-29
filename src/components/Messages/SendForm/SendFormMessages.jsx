@@ -32,34 +32,25 @@ const SendFormMessages = (props) => {
         <Col span={24}>
             <Row>
                 <Col span={22}>
-                    <div contentEditable={false} >
-                        {props.audioRecording ? '' :
-                            <TextAreaCustom typingValue={typingValue}
-                                setValue={setValue}
-                            />
-                        }
-                        <div className="img__preview">
-                            {props.previewImg && <ImagePreview previewImg={props.previewImg}
-                                removeImageAC={props.removeImageAC}
-                            />}
-                        </div>
+
+                    {props.audioRecording ? '' :
+                        <TextAreaCustom typingValue={typingValue}
+                            setValue={setValue}
+                            sendImageMessageTC={props.sendImageMessageTC}
+                            dialogId={props.match.params.roomId}
+                            myId={props.myId}
+                            setImagePreviewUrlAC={props.setImagePreviewUrlAC}
+                            setImageFileAC={props.setImageFileAC}
+                            removeImage={props.removeImage}
+                            removeImageAC={props.removeImageAC}
+                        />
+                    }
+                    <div className="img__preview">
+                        {props.previewImg && <ImagePreview previewImg={props.previewImg}
+                            removeImageAC={props.removeImageAC}
+                        />}
                     </div>
                 </Col>
-                {props.audioRecording ? '' :
-                    <div className="sendMethods">
-                        <div className="sendMethods-items">
-                            <ImageUpload
-                                sendImageMessageTC={props.sendImageMessageTC}
-                                dialogId={props.match.params.roomId}
-                                myId={props.myId}
-                                setImagePreviewUrlAC={props.setImagePreviewUrlAC}
-                                setImageFileAC={props.setImageFileAC}
-                                removeImage={props.removeImage}
-                                removeImageAC={props.removeImageAC}
-                            />
-                        </div>
-                    </div>
-                }
                 <Col span={props.audioRecording ? 24 : 2}>
                     {props.previewImg ?
                         <div className="sendButton">

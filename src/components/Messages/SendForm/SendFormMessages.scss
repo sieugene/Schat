@@ -10,7 +10,9 @@
         padding-right: 65px;
     }
     .sendMethods {
-        position: relative;
+        position: absolute;
+        top: 0;
+        right: 0;
         .sendMethods-items {
             z-index: 2;
             position: absolute;
