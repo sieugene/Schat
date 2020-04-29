@@ -21,7 +21,6 @@ export default class TextAreaCustom extends Component {
         this.setState({
             editorState,
         });
-        console.log('test', editorState.getCurrentContent().getPlainText('\u0001'))
         this.props.setValue(editorState.getCurrentContent().getPlainText('\u0001'));
     };
 
