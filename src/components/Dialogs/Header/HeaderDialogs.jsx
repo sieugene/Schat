@@ -4,14 +4,12 @@ import ProfileUser from './ProfileUser/ProfileUser'
 import NavbarDialogs from './Navbar/NavbarDialogs';
 import './HeaderDialogs.scss'
 import { connect } from 'react-redux';
-import { signOutThunkCreator } from './../../../redux/authReducer';
 
 const HeaderDialogs = (props) => {
     return (
         <>
             <Col>
-                <ProfileUser profile={props.profile} 
-                signOutThunkCreator={props.signOutThunkCreator}/>
+                <ProfileUser profile={props.profile}/>
             </Col>
             <Col>
                 <NavbarDialogs />
@@ -25,5 +23,4 @@ let mapStateToProps = (state) => {
     }
 }
 export default connect(mapStateToProps, {
-    signOutThunkCreator
 })(HeaderDialogs)

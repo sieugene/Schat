@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Row, Spin, Alert } from 'antd';
 import HeaderMessages from './Header/HeaderMessages';
 import ChatBody from './ChatBody/ChatBody';
@@ -10,6 +10,7 @@ import { sendMessageTC } from './../../redux/messagesReducer';
 import { compose } from 'redux';
 import SendFormMessages from './SendForm/SendFormMessages';
 import { chatAccess } from './MessagesHelper/MessagesHelper';
+import { setCurrentRoomId } from '../../redux/dialogsReducer';
 
 const currentDialog = 'dialog'
 const messagesData = 'messages'
@@ -30,6 +31,11 @@ const Messages = (props) => {
       storeAs: messagesData
     }
   ])
+
+  useEffect(() => {
+    props.setCurrentRoomId(props.match.params.roomId)
+  },[props.match.params.roomId])
+
   if (!props.dialog) {
     return <div><Spin /></div>
   } else if (chatAccess(props.dialog, props.myId)) {
@@ -71,5 +77,6 @@ let mapStateToProps = (state) => {
 export default compose(
   withRouter,
   connect(mapStateToProps, {
-    sendMessageTC
+    sendMessageTC,
+    setCurrentRoomId
   }))(Messages)

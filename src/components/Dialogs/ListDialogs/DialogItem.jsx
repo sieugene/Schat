@@ -5,8 +5,9 @@ import { UserOutlined } from '@ant-design/icons';
 import { getNameInDialog } from './HelperDialog';
 
 const DialogItem = (props) => {
+    const currentDialogStyle = props.roomId === props.id ? 'active' : ''
     return (
-        <Col span={24} className='dialog__item' key={props.id}>
+        <Col span={24} className={'dialog__item ' + currentDialogStyle} key={props.id}>
             <NavLink to={'/chat/dialog/' + props.id} >
                 <Row>
                     <Col>

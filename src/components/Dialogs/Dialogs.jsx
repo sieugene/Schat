@@ -4,6 +4,7 @@ import SearchDialogs from './Search/SearchDialogs'
 import { Row } from 'antd'
 import ListDialogs from './ListDialogs/ListDialogs';
 import './Dialogs.scss'
+import FooterDialogs from './FooterDialogs/FooterDialogs';
 const Dialogs = (props) => {
     return (
         <div className="dialogs">
@@ -17,6 +18,9 @@ const Dialogs = (props) => {
                 <div className="ListDialogs__dialogs__height">
                     <ListDialogs />
                 </div>
+            </Row>
+            <Row className='FooterDialogs__dialogs'>
+                <FooterDialogs />
             </Row>
         </div>
     )

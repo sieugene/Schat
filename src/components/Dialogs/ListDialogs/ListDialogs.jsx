@@ -12,7 +12,6 @@ import { setFilteredDialogsAC } from './../../../redux/dialogsReducer';
 
 
 const ListDialogs = (props) => {
-
     useFirestoreConnect([
         { collection: 'users' }
     ])
@@ -29,6 +28,7 @@ const ListDialogs = (props) => {
 
     const mapping = props.filteredDialogs && props.filteredDialogs.map((m) => {
         return <DialogItem id={m.id} invited={m.invited} key={m.id}
+            roomId={props.roomId}
             creator={m.creator}
             users={props.users}
             myId={props.myId}
@@ -53,7 +53,8 @@ let mapStateToProps = (state) => {
         users: state.firestore.ordered.users,
         dialogs: state.firestore.ordered.dialogs,
         requestedData: state.firestore.status.requesting,
-        filteredDialogs: state.filtDialogs.filteredDialogs
+        filteredDialogs: state.filtDialogs.filteredDialogs,
+        roomId: state.filtDialogs.roomId
     }
 }
 

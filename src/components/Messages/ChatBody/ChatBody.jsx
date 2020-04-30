@@ -11,7 +11,7 @@ const ChatBody = (props) => {
     }
     return (
         <>
-            {props.messages && props.messages.length >= 2 ?
+            {props.messages && props.messages.length >= 1 ?
                 props.messages.map((m) => {
                     return <Message alignMessage={alignMessage(m.uid)} 
                     messageType={m.messageType}

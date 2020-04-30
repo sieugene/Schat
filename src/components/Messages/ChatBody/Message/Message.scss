@@ -44,6 +44,11 @@
         background-position: center;
         background-size: cover;
         margin: 10px;
+        cursor: pointer;
+        transition: 0.3s all ease;
+        &:hover {
+            opacity: 0.75
+        }
         img {
             visibility: hidden;
         }
