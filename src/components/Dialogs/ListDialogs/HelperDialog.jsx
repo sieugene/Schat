@@ -17,7 +17,6 @@ export const getNameInDialog = (invited, creator, users, myId) => {
 }
 
 export const userIsOnline = (invited, creator, users, myId, usersOnlineArray) => {
-    debugger
     const userIsOnline = (userId) => {
         let result = usersOnlineArray ? usersOnlineArray.filter((u) => {
             return u.key === userId

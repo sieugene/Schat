@@ -37,33 +37,31 @@ export const StyledEmojiSelectWrapper = styled.div`
       display: inline-block;
     }
   .${theme.emojiSelectButton}, .${theme.emojiSelectButtonPressed} {
+    width: auto;
+    height: auto;
     margin: 0;
+    line-height: 0px;
     padding: 0;
-    width: 2.5em;
-    height: 1.5em;
-    box-sizing: border-box;
-    line-height: 1.2em;
-    font-size: 1.5em;
-    color: #888;
-    background: red;
-    border: 1px solid #ddd;
-    border-radius: 1.5em;
-    cursor: pointer;
+    border-radius: 0;
+    border: none;
+    background: transparent;
   }
   .${theme.emojiSelectButton}:focus, .${theme.emojiSelectButtonPressed}:focus {
     outline: 0;
     /* reset for :focus */
   }
   .${theme.emojiSelectButton}:hover, .${theme.emojiSelectButtonPressed}:hover {
-    background: #f3f3f3;
+  
   }
   .${theme.emojiSelectButton}:active, .${theme.emojiSelectButtonPressed}:active {
-    background: #e6e6e6;
+   
   }
   .${theme.emojiSelectButtonPressed} {
-    background: #ededed;
+    
   }
   .${theme.emojiSelectPopover} {
+    right: 0px;
+    top: -385px;
     margin-top: 10px;
     padding: 0 .3em;
     position: absolute;

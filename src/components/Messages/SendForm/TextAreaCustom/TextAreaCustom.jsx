@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Editor, { createEditorStateWithText } from 'draft-js-plugins-editor';
 import createEmojiPlugin from 'draft-js-emoji-plugin';
 import editorStyles from 'draft-js-emoji-plugin/lib/plugin.css';
@@ -6,8 +6,6 @@ import './TextAreaCustom.scss'
 import ImageUpload from './../ImageLoader/ImageLoader';
 import { SmileOutlined } from '@ant-design/icons';
 import { StyledEmojiSelectWrapper, GlobalStyleForEmojiSelect, theme } from './DraftEmojiStyles';
-
-
 const emojiPlugin = createEmojiPlugin({
     selectButtonContent: <SmileOutlined style={{ fontSize: '20px' }} />,
     theme: theme
@@ -17,26 +15,36 @@ const plugins = [emojiPlugin];
 
 
 
-export default class TextAreaCustom extends Component {
-    constructor(props) {
-        super(props)
-    }
+export default class TextAreaCustom extends React.Component {
     state = {
         editorState: createEditorStateWithText(this.props.typingValue),
     };
 
+    clear = () => {
+        this.setState({
+            editorState: createEditorStateWithText(this.props.typingValue),
+        })
+    }
     onChange = (editorState) => {
         this.setState({
             editorState,
         });
         this.props.setValue(editorState.getCurrentContent().getPlainText('\u0001'));
     };
-
     focus = () => {
         this.editor.focus();
     };
+    //если мы делаем submit, то очищаем поле
+    componentDidUpdate(prevProps) {
+        if (this.props.submitTextMessage !== prevProps.submitTextMessage) {
+            if (this.props.submitTextMessage) {
+                this.clear();
+            }
+        }
+    }
 
     render() {
+
         return (
             <>
                 <div className='TextAreaCustom'>

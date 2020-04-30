@@ -1,23 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './SendFormMessages.scss'
-import { Input, Col, Row } from 'antd';
+import { Col, Row } from 'antd';
 import { SendOutlined } from '@ant-design/icons';
 import AudioRecorder from './AudioRecorder/AudioRecorder';
-import { sendMessageTC, sendAudioMessageTC, sendImageMessageTC, setImagePreviewUrlAC, setAudioMessageAC, setImageFileAC, removeImageAC } from './../../../redux/messagesReducer';
+import { sendMessageTC, sendAudioMessageTC, sendImageMessageTC, setImagePreviewUrlAC, setAudioMessageAC, setImageFileAC, removeImageAC, submitTextMessageAC, setCurrentTextMessageAC } from './../../../redux/messagesReducer';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-import ImageUpload from './ImageLoader/ImageLoader';
 import ImagePreview from './ImageLoader/ImagePreview';
 import TextAreaCustom from './TextAreaCustom/TextAreaCustom';
-const { TextArea } = Input;
+
 
 const SendFormMessages = (props) => {
-    const [typingValue, setValue] = useState('');
-    const handleChange = (e) => {
-        setValue(e.target.value)
-    }
-
+    const typingValue = props.textMessage;
     const sendingMessage = () => {
         const message = {
             body: typingValue,
@@ -26,7 +21,7 @@ const SendFormMessages = (props) => {
             messageType: 'text'
         }
         props.sendMessageTC(message, props.match.params.roomId);
-        setValue('');
+        props.setCurrentTextMessageAC('')
     }
     return (
         <Col span={24}>
@@ -35,7 +30,7 @@ const SendFormMessages = (props) => {
 
                     {props.audioRecording ? '' :
                         <TextAreaCustom typingValue={typingValue}
-                            setValue={setValue}
+                            setValue={props.setCurrentTextMessageAC}
                             sendImageMessageTC={props.sendImageMessageTC}
                             dialogId={props.match.params.roomId}
                             myId={props.myId}
@@ -43,6 +38,7 @@ const SendFormMessages = (props) => {
                             setImageFileAC={props.setImageFileAC}
                             removeImage={props.removeImage}
                             removeImageAC={props.removeImageAC}
+                            submitTextMessage={props.submitTextMessage}
                         />
                     }
                     <div className="img__preview">
@@ -82,6 +78,7 @@ const SendFormMessages = (props) => {
                     }
                 </Col>
             </Row>
+            <div className="customBottom"></div>
         </Col>
     )
 }
@@ -92,7 +89,9 @@ let mapStateToProps = (state) => {
         previewImg: state.sendMessages.previewImg,
         audioRecording: state.sendMessages.audioRecording,
         imgFile: state.sendMessages.imgFile,
-        removeImage: state.sendMessages.removeImage
+        removeImage: state.sendMessages.removeImage,
+        textMessage: state.sendMessages.textMessage,
+        submitTextMessage: state.sendMessages.submitTextMessage
     }
 }
 
@@ -105,5 +104,7 @@ export default compose(
         setImagePreviewUrlAC,
         setAudioMessageAC,
         setImageFileAC,
-        removeImageAC
+        removeImageAC,
+        setCurrentTextMessageAC,
+        submitTextMessageAC
     }))(SendFormMessages)

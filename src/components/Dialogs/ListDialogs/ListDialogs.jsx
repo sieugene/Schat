@@ -28,7 +28,7 @@ const ListDialogs = (props) => {
     }, [props.dialogs])
 
     const mapping = props.filteredDialogs && props.filteredDialogs.map((m) => {
-        return <DialogItem id={m.id} invited={m.invited}
+        return <DialogItem id={m.id} invited={m.invited} key={m.id}
             creator={m.creator}
             users={props.users}
             myId={props.myId}

@@ -3,11 +3,16 @@ const SET_IMG_PREVIEW = 'MESSAGES/SET_IMG_PREVIEW'
 const SET_AUDIO_MESSAGE = 'MESSAGES/SET_AUDIO_MESSAGE'
 const SET_IMG_FILE = 'MESSAGES/SET_IMG_FILE';
 const REMOVE_IMAGE = 'MESSAGES/REMOVE_IMAGE'
+const SET_CURRENT_TEXT = 'MESSAGETEXTAREA/SET_CURRENT_TEXT'
+const SUBMIT_TEXT_MESSAGE = 'MESSAGETEXTAREA/SUBMIT_TEXT_MESSAGE'
+
 let initialState = {
     previewImg: null,
     audioRecording: false,
     imgFile: null,
-    removeImage: false
+    removeImage: false,
+    textMessage: '',
+    submitTextMessage: false
 }
 
 
@@ -33,13 +38,36 @@ const messagesReducer = (state = initialState, action) => {
                 ...state,
                 removeImage: action.removeImage
             }
+        case SET_CURRENT_TEXT:
+            return {
+                ...state,
+                textMessage: action.textMessage
+            }
+        case SUBMIT_TEXT_MESSAGE:
+            return {
+                ...state,
+                submitTextMessage: action.submitTextMessage
+            }
         default:
             return state
     }
 
 
 }
-
+export const setCurrentTextMessageAC = (textMessage) => {
+        return {
+            type: SET_CURRENT_TEXT,
+            textMessage
+        }
+    }
+    //создали отслеживание submit для очистки поля
+    //так как поле и кнопка находятся в разных местах
+export const submitTextMessageAC = (submitTextMessage) => {
+    return {
+        type: SUBMIT_TEXT_MESSAGE,
+        submitTextMessage
+    }
+}
 
 export const sendAudioMessageAC = (message) => {
     return {
@@ -52,7 +80,6 @@ export const sendAudioMessageTC = (file, myId, dialogId) => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {
         const firebase = getFirebase();
         const storageRef = firebase.storage().ref()
-            //!!!!создать генерацию имени!!!!!!
         const generateName = Date.now() + myId;
         const fileRef = storageRef.child(`dialogs/${generateName}.webm`)
         return fileRef.put(file).then((response) => {
@@ -90,13 +117,16 @@ export const sendImageMessageTC = (file, myId, dialogId) => {
 
 export const sendMessageTC = (message, dialogId) => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {
+        dispatch(submitTextMessageAC(true));
         const firestore = getFirestore();
         firestore.collection(`dialogs/${dialogId}/messages`).add({
             ...message
         }).then((resp) => {
             dispatch(setLastMessageTC(message, dialogId));
+            dispatch(submitTextMessageAC(false));
         }).catch((err) => {
             console.log(err)
+            dispatch(submitTextMessageAC(false));
         })
     }
 }
