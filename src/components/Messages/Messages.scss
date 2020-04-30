@@ -1,5 +1,5 @@
 .messages {
-    height: 100vh;
+    // overflow: hidden;
     .messages__header {
         background: white;
         padding: 10px;
@@ -13,11 +13,8 @@
         overflow: auto;
         background-color: #f7f7f7;
         .messages__body__height {
-            height: 80vh;
+            height: 70vh;
             width: 100%;
         }
-    }
-    .messages__sendforms {
-        padding-top: 15px;
     }
 }

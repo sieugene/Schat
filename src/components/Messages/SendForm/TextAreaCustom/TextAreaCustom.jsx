@@ -46,7 +46,7 @@ export default class TextAreaCustom extends React.Component {
     render() {
 
         return (
-            <>
+            <div className='wrapper__textAreaCustom'>
                 <div className='TextAreaCustom'>
                     <div className={editorStyles.editor} onClick={this.focus}>
                         <Editor
@@ -77,7 +77,7 @@ export default class TextAreaCustom extends React.Component {
                         </div>
                     </div>
                 </div>
-            </>
+            </div>
         );
     }
 }

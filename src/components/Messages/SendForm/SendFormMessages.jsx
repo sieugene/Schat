@@ -25,7 +25,7 @@ const SendFormMessages = (props) => {
     }
     return (
         <Col span={24}>
-            <Row>
+            <Row className='maxHeight__sendForm'>
                 <Col span={22}>
 
                     {props.audioRecording ? '' :

@@ -6,9 +6,9 @@
     -webkit-box-shadow: 10px 0px 19px 0px rgba(50, 50, 50, 0.25);
     -moz-box-shadow: 10px 0px 19px 0px rgba(50, 50, 50, 0.25);
     box-shadow: 10px 0px 19px 0px rgba(50, 50, 50, 0.25);
-    height: 100vh;
     position: relative;
     z-index: 1;
+    // overflow: hidden;
     .header__dialogs {
         background-color: #ffffff;
         @include paddings__dialogs();
@@ -23,8 +23,11 @@
         @include paddings__dialogs();
         overflow: auto;
         .ListDialogs__dialogs__height {
-            height: 80vh;
+            height: 70vh;
             width: 100%;
         }
+    }
+    .FooterDialogs__dialogs {
+        height: 68px;
     }
 }

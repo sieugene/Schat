@@ -1,3 +1,7 @@
+.maxHeight__sendForm {
+    height: 100px;
+}
+
 .messages__sendforms {
     .img__preview {
         overflow: hidden;
@@ -11,7 +15,7 @@
     }
     .sendMethods {
         position: absolute;
-        top: 0;
+        bottom: 40px;
         right: 0;
         .sendMethods-items {
             z-index: 2;
@@ -28,6 +32,10 @@
     }
 }
 
-.customBottom {
-    margin-top: 200px;
+.sendButton {
+    height: 100%;
+    align-items: center;
+    display: flex;
+    padding-left: 10px;
+    z-index: 999999;
 }
