@@ -29,5 +29,9 @@
     }
     .FooterDialogs__dialogs {
         height: 68px;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        padding-bottom: 10px;
     }
 }

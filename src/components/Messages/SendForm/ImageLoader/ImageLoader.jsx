@@ -23,9 +23,12 @@ const ImageUpload = (props) => {
   return (
     <div className="inputImageComponent">
       <FileImageOutlined style={{ fontSize: '20px' }} />
-      <input className="fileInput"
-        type="file"
-        onChange={(e) => handleImageChange(e)} />
+      <div className='fileInputButton'>
+        <input className="fileInput"
+          type="file"
+          onChange={(e) => handleImageChange(e)} />
+      </div>
+
 
     </div>
   )

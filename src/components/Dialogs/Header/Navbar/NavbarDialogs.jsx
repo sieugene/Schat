@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { checkDuplicateAndCreateRoom } from '../../../../redux/CreateChat'
-import ModalCreateDialog from '../../../Messages/ModalCreateDialog/ModalCreateDialog'
+import ModalCreateDialog from '../../ModalCreateDialog/ModalCreateDialog'
 
 const NavbarDialogs = (props) => {
     const creatingChat = (value) => {

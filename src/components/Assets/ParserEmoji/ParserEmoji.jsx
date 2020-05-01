@@ -9,7 +9,7 @@ const SimpleParser=(Plaintext,Rule,RenderNode)=>{
     });
     let ruleSplits=Plaintext.split(Rule);
     let Nodes=ruleSplits.reduce((prev,current,index)=>{
-        return  [...prev,current.replace(//g, "                  "), RuleMatches[index]];
+        return  [...prev,current.replace(//g, "\t"), RuleMatches[index]];
     },[]);
     return Nodes
 

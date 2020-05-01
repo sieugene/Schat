@@ -7,8 +7,8 @@ import { withRouter } from 'react-router-dom';
 import { Spin } from 'antd';
 import { createChatRoom, checkDuplicateAndCreateRoom } from '../../../redux/CreateChat';
 import DialogUser from './DialogUser/DialogUser';
-import DialogItem from './DialogItem';
 import { setFilteredDialogsAC } from './../../../redux/dialogsReducer';
+import DialogItem from './DialogItem/DialogItem';
 
 
 const ListDialogs = (props) => {
