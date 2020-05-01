@@ -1,7 +1,7 @@
 import React from 'react'
-import { MultiLineParser } from 'text-emoji-parser';
 import { Emoji, getEmojiDataFromNative } from 'emoji-mart';
 import data from 'emoji-mart/data/all.json'
+import {MultiLineParser} from './../../../../Assets/ParserEmoji/ParserEmoji'
 
 const TextMessage = (props) => {
     const Parse =
@@ -18,7 +18,9 @@ const TextMessage = (props) => {
                     return <Emoji emoji={EmojiTextMatchingRule} size={16} />
                 }
             });
+
     return Parse
+
 }
 
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import './SendFormMessages.scss'
-import { Col, Row } from 'antd';
+import { Col, Row, Spin } from 'antd';
 import { SendOutlined } from '@ant-design/icons';
 import AudioRecorder from './AudioRecorder/AudioRecorder';
 import { sendMessageTC, sendAudioMessageTC, sendImageMessageTC, setImagePreviewUrlAC, setAudioMessageAC, setImageFileAC, removeImageAC, submitTextMessageAC, setCurrentTextMessageAC } from './../../../redux/messagesReducer';
@@ -26,8 +26,12 @@ const SendFormMessages = (props) => {
     return (
         <Col span={24}>
             <Row className='maxHeight__sendForm'>
+                {props.sendLoading &&
+                    <div className="showLoadingProcess">
+                        <Spin />
+                    </div>
+                }
                 <Col span={22}>
-
                     {props.audioRecording ? '' :
                         <TextAreaCustom typingValue={typingValue}
                             setValue={props.setCurrentTextMessageAC}
@@ -91,7 +95,8 @@ let mapStateToProps = (state) => {
         imgFile: state.sendMessages.imgFile,
         removeImage: state.sendMessages.removeImage,
         textMessage: state.sendMessages.textMessage,
-        submitTextMessage: state.sendMessages.submitTextMessage
+        submitTextMessage: state.sendMessages.submitTextMessage,
+        sendLoading: state.sendMessages.sendLoading
     }
 }
 

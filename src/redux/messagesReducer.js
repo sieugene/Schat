@@ -5,14 +5,15 @@ const SET_IMG_FILE = 'MESSAGES/SET_IMG_FILE';
 const REMOVE_IMAGE = 'MESSAGES/REMOVE_IMAGE'
 const SET_CURRENT_TEXT = 'MESSAGETEXTAREA/SET_CURRENT_TEXT'
 const SUBMIT_TEXT_MESSAGE = 'MESSAGETEXTAREA/SUBMIT_TEXT_MESSAGE'
-
+const SEND_LOADING = 'MESSAGETEXTAREA/SEND_LOADING'
 let initialState = {
     previewImg: null,
     audioRecording: false,
     imgFile: null,
     removeImage: false,
     textMessage: '',
-    submitTextMessage: false
+    submitTextMessage: false,
+    sendLoading: false
 }
 
 
@@ -48,12 +49,23 @@ const messagesReducer = (state = initialState, action) => {
                 ...state,
                 submitTextMessage: action.submitTextMessage
             }
+        case SEND_LOADING:
+            return {
+                ...state,
+                sendLoading: action.sendLoading
+            }
         default:
             return state
     }
-
-
 }
+
+export const setSendLoadingAC = (sendLoading) => {
+    return {
+        type: SEND_LOADING,
+        sendLoading
+    }
+}
+
 export const setCurrentTextMessageAC = (textMessage) => {
         return {
             type: SET_CURRENT_TEXT,
@@ -78,45 +90,60 @@ export const sendAudioMessageAC = (message) => {
 
 export const sendAudioMessageTC = (file, myId, dialogId) => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {
-        const firebase = getFirebase();
-        const storageRef = firebase.storage().ref()
-        const generateName = Date.now() + myId;
-        const fileRef = storageRef.child(`dialogs/${generateName}.webm`)
-        return fileRef.put(file).then((response) => {
-            console.log('отправка произошла, вот путь:', response.metadata.fullPath)
-            const message = {
-                body: response.metadata.fullPath,
-                createdAt: new Date(),
-                uid: myId,
-                messageType: 'audio'
-            }
-            dispatch(sendMessageTC(message, dialogId))
-        })
+        const sendLoading = getState().sendMessages.sendLoading
+        if (!sendLoading) {
+            dispatch(setSendLoadingAC(true));
+            const firebase = getFirebase();
+            const storageRef = firebase.storage().ref()
+            const generateName = Date.now() + myId;
+            const fileRef = storageRef.child(`dialogs/${generateName}.webm`)
+            return fileRef.put(file).then((response) => {
+                console.log('отправка произошла, вот путь:', response.metadata.fullPath)
+                const message = {
+                    body: response.metadata.fullPath,
+                    createdAt: new Date(),
+                    uid: myId,
+                    messageType: 'audio'
+                }
+                dispatch(sendMessageTC(message, dialogId))
+            }).catch((err) => {
+                dispatch(setSendLoadingAC(false));
+            })
+        }
     }
 }
 export const sendImageMessageTC = (file, myId, dialogId) => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {
-        const firebase = getFirebase();
-        const storageRef = firebase.storage().ref()
-        const generateName = Date.now() + myId + 'image';
-        const fileRef = storageRef.child(`dialogs/${generateName}`)
-        return fileRef.put(file).then((response) => {
-            console.log('отправка произошла, вот путь:', response.metadata.fullPath)
-            const message = {
-                body: response.metadata.fullPath,
-                createdAt: new Date(),
-                uid: myId,
-                messageType: 'img'
-            }
-            dispatch(sendMessageTC(message, dialogId));
-            dispatch(setImagePreviewUrlAC(null));
-            dispatch(setImageFileAC(null))
-        })
+        const sendLoading = getState().sendMessages.sendLoading
+        if (!sendLoading) {
+            dispatch(setSendLoadingAC(true));
+            const firebase = getFirebase();
+            const storageRef = firebase.storage().ref()
+            const generateName = Date.now() + myId + 'image';
+            const fileRef = storageRef.child(`dialogs/${generateName}`)
+            return fileRef.put(file).then((response) => {
+                console.log('отправка произошла, вот путь:', response.metadata.fullPath)
+                const message = {
+                    body: response.metadata.fullPath,
+                    createdAt: new Date(),
+                    uid: myId,
+                    messageType: 'img'
+                }
+                dispatch(sendMessageTC(message, dialogId));
+                dispatch(setImagePreviewUrlAC(null));
+                dispatch(setImageFileAC(null))
+            }).catch((err) => {
+                dispatch(setSendLoadingAC(false));
+            })
+        } else {
+            alert('!!!')
+        }
     }
 }
 
 export const sendMessageTC = (message, dialogId) => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {
+        dispatch(setSendLoadingAC(true));
         dispatch(submitTextMessageAC(true));
         const firestore = getFirestore();
         firestore.collection(`dialogs/${dialogId}/messages`).add({
@@ -124,9 +151,11 @@ export const sendMessageTC = (message, dialogId) => {
         }).then((resp) => {
             dispatch(setLastMessageTC(message, dialogId));
             dispatch(submitTextMessageAC(false));
+            dispatch(setSendLoadingAC(false));
         }).catch((err) => {
             console.log(err)
             dispatch(submitTextMessageAC(false));
+            dispatch(setSendLoadingAC(false));
         })
     }
 }
