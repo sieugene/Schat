@@ -15,7 +15,7 @@ const SearchDialogs = (props) => {
 
     const handleChangeSearch = (e) => {
         if (e.target.value === '') {
-            setDialogs(props.filteredDialogs);
+            props.setSearchDialogsAC([]);
         } else {
             let result = searchDialogs && searchDialogs.filter(function (val) {
                 return (getNameInDialog(
@@ -24,7 +24,7 @@ const SearchDialogs = (props) => {
                     props.users,
                     props.myId) + "").indexOf(e.target.value) !== -1;
             });
-            setDialogs(result);
+            props.setSearchDialogsAC(result);
         }
     }
     return (
@@ -35,10 +35,6 @@ const SearchDialogs = (props) => {
                 style={{ width: '100%' }}
                 onChange={handleChangeSearch}
             />
-            {searchDialogs.map((dialog) => {
-                return <div>{getNameInDialog(dialog.invited,dialog.creator,props.users,props.myId)}
-                </div>
-            })}
         </Col>
     )
 }

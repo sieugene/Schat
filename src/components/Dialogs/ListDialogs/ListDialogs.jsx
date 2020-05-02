@@ -43,6 +43,7 @@ const ListDialogs = (props) => {
         <DialogUser dialogs={mapping}
             myId={props.myId}
             users={props.users}
+            searchDialogs={props.searchDialogs}
         />
     )
 }
@@ -54,7 +55,8 @@ let mapStateToProps = (state) => {
         dialogs: state.firestore.ordered.dialogs,
         requestedData: state.firestore.status.requesting,
         filteredDialogs: state.filtDialogs.filteredDialogs,
-        roomId: state.filtDialogs.roomId
+        roomId: state.filtDialogs.roomId,
+        searchDialogs: state.filtDialogs.searchDialogs
     }
 }
 
