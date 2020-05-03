@@ -3,11 +3,11 @@ import MapSearchDialogs from './../../Search/MapSearchDialogs';
 
 
 const DialogUser = (props) => {
-    if(props.searchDialogs.length >= 1){
+    if (props.searchDialogs.length >= 1) {
         return <MapSearchDialogs
-        searchDialogs={props.searchDialogs}
-        users={props.users}
-        myId={props.myId}
+            searchDialogs={props.searchDialogs}
+            users={props.users}
+            myId={props.myId}
         />
     }
     return (

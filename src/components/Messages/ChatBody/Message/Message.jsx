@@ -1,6 +1,5 @@
 import React from 'react'
-import { Row, Col, Avatar } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { Row, Col } from 'antd';
 import MessageType from './MessageType';
 import './Message.scss'
 
@@ -16,7 +15,7 @@ const Message = (props) => {
                                 style={{ justifyContent: props.alignMessage }}>
                                 <MessageType message={props.message}
                                     messageType={props.messageType} />
-                                <Avatar size={34} icon={<UserOutlined />} />
+                                {props.myAvatar}
                             </div>
                         </Col>
                     </>
@@ -25,7 +24,7 @@ const Message = (props) => {
                         <Col span={24}>
                             <div className="messageItem"
                                 style={{ justifyContent: props.alignMessage }}>
-                                <Avatar size={34} icon={<UserOutlined />} />
+                                {props.userAvatar}
                                 <MessageType message={props.message}
                                     messageType={props.messageType} />
                             </div>

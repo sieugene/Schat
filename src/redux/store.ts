@@ -8,16 +8,18 @@ import authReducer from "./authReducer";
 import createChatReducer from "./CreateChat";
 import dialogsReducer from "./dialogsReducer";
 import messagesReducer from "./messagesReducer";
+import meReducer from "./meReducer";
 
 
 
 let reducers = combineReducers({
     auth: authReducer,
+    optionsMe: meReducer,
     filtDialogs: dialogsReducer,
     createChat: createChatReducer,
     sendMessages: messagesReducer,
     firebase: firebaseReducer,
-    firestore: firestoreReducer  
+    firestore: firestoreReducer 
 })
 
 type RootReducerType = typeof reducers;

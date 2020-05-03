@@ -30,7 +30,7 @@ const SearchDialogs = (props) => {
     return (
         <Col span={24}>
             <Search
-                placeholder="input search text"
+                placeholder="Поиск диалога"
                 onSearch={value => console.log(value)}
                 style={{ width: '100%' }}
                 onChange={handleChangeSearch}

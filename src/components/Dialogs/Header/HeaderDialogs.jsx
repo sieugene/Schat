@@ -4,12 +4,16 @@ import ProfileUser from './ProfileUser/ProfileUser'
 import NavbarDialogs from './Navbar/NavbarDialogs';
 import './HeaderDialogs.scss'
 import { connect } from 'react-redux';
+import { setUserImageTC } from './../../../redux/meReducer';
 
 const HeaderDialogs = (props) => {
     return (
         <>
             <Col>
-                <ProfileUser profile={props.profile}/>
+                <ProfileUser profile={props.profile}
+                setUserImageTC={props.setUserImageTC}
+                myId={props.myId}
+                />
             </Col>
             <Col>
                 <NavbarDialogs />
@@ -19,8 +23,10 @@ const HeaderDialogs = (props) => {
 }
 let mapStateToProps = (state) => {
     return{
-        profile: state.firebase.profile
+        profile: state.firebase.profile,
+        myId: state.firebase.auth.uid
     }
 }
 export default connect(mapStateToProps, {
+    setUserImageTC
 })(HeaderDialogs)

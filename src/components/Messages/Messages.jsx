@@ -34,7 +34,8 @@ const Messages = (props) => {
 
   useEffect(() => {
     props.setCurrentRoomId(props.match.params.roomId)
-  },[props.match.params.roomId])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.match.params.roomId])
 
   if (!props.dialog) {
     return <div><Spin /></div>
@@ -55,6 +56,8 @@ const Messages = (props) => {
               roomId={props.match.params.roomId}
               messages={props.messages}
               myId={props.myId}
+              users={props.users}
+              profile={props.profile}
             />
           </div>
         </Row>
@@ -70,7 +73,9 @@ let mapStateToProps = (state) => {
   return {
     myId: state.firebase.auth.uid,
     dialog: state.firestore.ordered[currentDialog],
-    messages: state.firestore.ordered[messagesData]
+    messages: state.firestore.ordered[messagesData],
+    users: state.firestore.ordered.users,
+    profile: state.firebase.profile
   }
 }
 
