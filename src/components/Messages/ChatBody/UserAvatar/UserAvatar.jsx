@@ -3,7 +3,7 @@ import { UserOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
 
 const UserAvatar = (props) => {
-  
+
     return (
         <>
             <Avatar size={34} icon=

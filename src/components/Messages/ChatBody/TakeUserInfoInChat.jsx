@@ -25,6 +25,10 @@ const TakeUserInfoInChat = (props) => {
             props.currentDialogUserInfo[0] &&
                 props.setCurrentChatUInfoUserTC(props.currentDialogUserInfo[0])
         }
+        //очистка 
+        return () => {
+            props.setCurrentChatUInfoUserTC(undefined);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.currentDialogUserInfo])
     //добавляем информацию о себя

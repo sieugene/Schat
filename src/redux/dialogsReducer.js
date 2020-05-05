@@ -69,27 +69,30 @@ export const setCurrentChatUsersInfoUser = (userInfo) => {
 }
 export const setCurrentChatUInfoUserTC = (userInfo) => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {
-        dispatch(loadingDataToggleAC(true));
-        const firebase = getFirebase();
-        if (userInfo.photoURL !== '') {
-            const storageRef = firebase.storage().ref()
-            storageRef.child(userInfo.photoURL).getDownloadURL().then((resp) => {
+        //проверяем есть или нет, так как делаем очистку
+        if (userInfo) {
+            dispatch(loadingDataToggleAC(true));
+            const firebase = getFirebase();
+            if (userInfo.photoURL !== '') {
+                const storageRef = firebase.storage().ref()
+                storageRef.child(userInfo.photoURL).getDownloadURL().then((resp) => {
+                    let result = {
+                        ...userInfo,
+                        avatarLink: resp
+                    }
+                    dispatch(setCurrentChatUsersInfoUser(result))
+                    dispatch(loadingDataToggleAC(false));
+                })
+            } else {
                 let result = {
                     ...userInfo,
-                    avatarLink: resp
+                    avatarLink: ''
                 }
                 dispatch(setCurrentChatUsersInfoUser(result))
-                dispatch(loadingDataToggleAC(false));
-            })
-        } else {
-            let result = {
-                ...userInfo,
-                avatarLink: ''
+                setTimeout(() => {
+                    dispatch(loadingDataToggleAC(false));
+                }, 1500)
             }
-            dispatch(setCurrentChatUsersInfoUser(result))
-            setTimeout(() => {
-                dispatch(loadingDataToggleAC(false));
-            }, 1500)
         }
     }
 }
