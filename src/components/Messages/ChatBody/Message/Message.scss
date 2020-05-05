@@ -1,20 +1,52 @@
-.messagebody {
-    min-width: 81px;
-    max-width: 300px;
-    border-radius: 11px;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    background-color: white;
-    -webkit-box-shadow: 0px 0px 25px 0px rgba(50, 50, 50, 0.25);
-    -moz-box-shadow: 0px 0px 25px 0px rgba(50, 50, 50, 0.25);
-    box-shadow: 0px 0px 25px 0px rgba(50, 50, 50, 0.25);
-    overflow: hidden;
-    p {
-        margin: 0;
-        color: black;
-        word-break: break-all;
+.ant-row.ant-row-flex-start {
+    .messagebody {
+        .messageDate {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            p {
+                font-size: 10px;
+                color: #000000ad;
+            }
+        }
+    }
+}
+
+.ant-row.ant-row-flex-end {
+    .messagebody {
+        .messageDate {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            p {
+                font-size: 10px;
+                color: #000000ad;
+            }
+        }
+    }
+}
+
+.messageWrapper {
+    padding-bottom: 21px;
+    position: relative;
+    .messagebody {
+        min-width: 81px;
+        max-width: 300px;
+        border-radius: 11px;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        background-color: white;
+        -webkit-box-shadow: 0px 0px 25px 0px rgba(50, 50, 50, 0.25);
+        -moz-box-shadow: 0px 0px 25px 0px rgba(50, 50, 50, 0.25);
+        box-shadow: 0px 0px 25px 0px rgba(50, 50, 50, 0.25);
+        overflow: hidden;
+        p {
+            margin: 0;
+            color: black;
+            word-break: break-all;
+        }
     }
 }
 

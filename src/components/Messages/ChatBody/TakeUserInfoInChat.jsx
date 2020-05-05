@@ -65,6 +65,7 @@ const TakeUserInfoInChat = (props) => {
                         messageType={m.messageType}
                         message={m.body} key={m.id}
                         profile={props.profile}
+                        createdAt={m.createdAt}
                         userAvatar={userAvatar}
                         myAvatar={myAvatar}
                     />

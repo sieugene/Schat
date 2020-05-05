@@ -3,8 +3,9 @@ import Audio from './MessageType/Audio';
 import './Message.scss'
 import ImageMessage from './MessageType/ImageMessage';
 import TextMessage from './MessageType/TextMessage';
-
+import { checkManyOneDay } from '../../MessagesHelper/MessagesHelper';
 const MessageType = (props) => {
+
     let content = '';
     if (props.messageType === 'img') {
         content = <ImageMessage image={props.message} />
@@ -16,8 +17,15 @@ const MessageType = (props) => {
         content = <Audio srcAudio={props.message} />
     }
     return (
-        <div className='messagebody'>
-            {content}
+        <div className='messageWrapper'>
+            <div className='messagebody'>
+                {content}
+                <div className="messageDate">
+                    <p>
+                        {checkManyOneDay(props.createdAt)}
+                    </p>
+                </div>
+            </div>
         </div>
     )
 }
