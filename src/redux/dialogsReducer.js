@@ -68,6 +68,7 @@ export const setCurrentChatUsersInfoUser = (userInfo) => {
     }
 }
 export const setCurrentChatUInfoUserTC = (userInfo) => {
+    debugger
     return (dispatch, getState, { getFirebase, getFirestore }) => {
         //проверяем есть или нет, так как делаем очистку
         if (userInfo) {
@@ -105,7 +106,7 @@ export const setCurrentChatUsersMyInfo = (myinfo) => {
 export const setCurrentChatUInfoMyInfoTC = (myInfo) => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {
         const firebase = getFirebase();
-        if (myInfo.photoURL !== ' ') {
+        if (myInfo.photoURL !== '') {
             const storageRef = firebase.storage().ref()
             storageRef.child(myInfo.photoURL).getDownloadURL().then((resp) => {
                 let result = {
