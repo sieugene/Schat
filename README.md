@@ -96,6 +96,7 @@ action creator, который упаковывает содержимое со�
 ![demo](https://github.com/sieugene/Schat/blob/master/src/ghImages/1.png?raw=true)
 ![demo](https://github.com/sieugene/Schat/blob/master/src/ghImages/2.png?raw=true)
 ![demo](https://github.com/sieugene/Schat/blob/master/src/ghImages/3.png?raw=true)
+![demo](https://github.com/sieugene/Schat/blob/master/src/ghImages/4.png?raw=true)
 
    This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
