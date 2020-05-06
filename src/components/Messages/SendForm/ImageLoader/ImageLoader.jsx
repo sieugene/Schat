@@ -8,6 +8,7 @@ const ImageUpload = (props) => {
     let reader = new FileReader();
     let file = e.target.files[0];
     reader.onloadend = () => {
+      debugger
       props.setImageFileAC(file);
       props.setImagePreviewUrlAC(reader.result);
     }

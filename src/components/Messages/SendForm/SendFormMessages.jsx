@@ -45,11 +45,11 @@ const SendFormMessages = (props) => {
                             submitTextMessage={props.submitTextMessage}
                         />
                     }
-                    <div className="img__preview">
-                        {props.previewImg && <ImagePreview previewImg={props.previewImg}
+                    {props.previewImg && <div className="img__preview">
+                        <ImagePreview previewImg={props.previewImg}
                             removeImageAC={props.removeImageAC}
-                        />}
-                    </div>
+                        />
+                    </div>}
                 </Col>
                 <Col span={props.audioRecording ? 24 : 2}>
                     {props.previewImg ?
