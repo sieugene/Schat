@@ -18,9 +18,9 @@ export const checkManyOneDay = (createdAt) => {
         let currentDate = new Date().getTime() / 1000;
         let result = Math.ceil(manyDays - currentDate);
         if (result <= oneDayInSeconds) {
-            return moment(createdAt.toDate()).format('L')
+            return moment(createdAt.toDate()).format("DD.MM.YYYY") + ' ' + moment(createdAt.toDate()).format('HH:mm')
         } else {
-            return moment(createdAt.toDate()).format('hh:mm a')
+            return moment(createdAt.toDate()).format('HH:mm')
         }
     }
 }

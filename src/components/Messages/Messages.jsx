@@ -25,9 +25,8 @@ const Messages = (props) => {
   useFirestoreConnect([
     {
       collection: `dialogs/${props.match.params.roomId}/messages`,
-      orderBy: [
-        ['createdAt'],
-      ],
+      limit: props.limitMessages,
+      orderBy: ['createdAt', 'desc'],
       storeAs: messagesData
     }
   ])
@@ -75,7 +74,8 @@ let mapStateToProps = (state) => {
     dialog: state.firestore.ordered[currentDialog],
     messages: state.firestore.ordered[messagesData],
     users: state.firestore.ordered.users,
-    profile: state.firebase.profile
+    profile: state.firebase.profile,
+    limitMessages: state.sendMessages.limitMessages
   }
 }
 

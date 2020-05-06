@@ -6,6 +6,8 @@ const REMOVE_IMAGE = 'MESSAGES/REMOVE_IMAGE'
 const SET_CURRENT_TEXT = 'MESSAGETEXTAREA/SET_CURRENT_TEXT'
 const SUBMIT_TEXT_MESSAGE = 'MESSAGETEXTAREA/SUBMIT_TEXT_MESSAGE'
 const SEND_LOADING = 'MESSAGETEXTAREA/SEND_LOADING'
+const SET_LIMIT_MESSAGES = 'MESSAGES/SET_LIMIT_MESSAGES'
+
 let initialState = {
     previewImg: null,
     audioRecording: false,
@@ -13,7 +15,8 @@ let initialState = {
     removeImage: false,
     textMessage: '',
     submitTextMessage: false,
-    sendLoading: false
+    sendLoading: false,
+    limitMessages: 10
 }
 
 
@@ -54,11 +57,22 @@ const messagesReducer = (state = initialState, action) => {
                 ...state,
                 sendLoading: action.sendLoading
             }
+        case SET_LIMIT_MESSAGES:
+            return {
+                ...state,
+                limitMessages: action.limitMessages
+            }
         default:
             return state
     }
 }
 
+export const setLimitMessages = (limitMessages) => {
+    return {
+        type: SET_LIMIT_MESSAGES,
+        limitMessages
+    }
+}
 export const setSendLoadingAC = (sendLoading) => {
     return {
         type: SEND_LOADING,

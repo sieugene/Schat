@@ -7,6 +7,8 @@ import { setCurrentChatUInfoUserTC, setCurrentChatUInfoMyInfoTC } from './../../
 import { Spin } from 'antd';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
+import { setLimitMessages } from './../../../redux/messagesReducer';
+import LimitMessages from './LimitMessages/LimitMessages';
 
 
 const currentDialogUser = 'currentDialogUserInfo'
@@ -54,13 +56,23 @@ const TakeUserInfoInChat = (props) => {
     //определение аватара
     const myAvatar = <UserAvatar photoURL={props.currentChatUsersInfo.myinfo.avatarLink} />;
     const userAvatar = <UserAvatar photoURL={props.currentChatUsersInfo.userInfo.avatarLink} />
+
+    //делаем копию, для reverse массива сообщений
+    const copyArrayMessages = [...props.messages];
+    //
     if(props.loadingData){
         return <Spin/>
     }
     return (
         <div>
-            {props.messages && props.messages.length >= 1 ?
-                props.messages.map((m) => {
+            <LimitMessages 
+            setLimitMessages={props.setLimitMessages}
+            messages={copyArrayMessages}
+            limitMessages={props.limitMessages}
+            
+            />
+            {copyArrayMessages && copyArrayMessages.length >= 1 ?
+                copyArrayMessages.slice(0).reverse().map((m) => {
                     return <Message alignMessage={alignMessage(m.uid)}
                         messageType={m.messageType}
                         message={m.body} key={m.id}
@@ -82,7 +94,8 @@ let mapStateToProps = (state) => {
         currentDialogUserInfo: state.firestore.ordered[currentDialogUser],
         profile: state.firebase.profile,
         currentChatUsersInfo: state.filtDialogs.currentChatUsersInfo,
-        loadingData: state.filtDialogs.loadingData
+        loadingData: state.filtDialogs.loadingData,
+        limitMessages: state.sendMessages.limitMessages
     }
 }
 
@@ -90,5 +103,6 @@ export default compose(
     withRouter,
     connect(mapStateToProps, {
     setCurrentChatUInfoUserTC,
-    setCurrentChatUInfoMyInfoTC
+    setCurrentChatUInfoMyInfoTC,
+    setLimitMessages
 }))(TakeUserInfoInChat)

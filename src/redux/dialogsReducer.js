@@ -68,7 +68,6 @@ export const setCurrentChatUsersInfoUser = (userInfo) => {
     }
 }
 export const setCurrentChatUInfoUserTC = (userInfo) => {
-    debugger
     return (dispatch, getState, { getFirebase, getFirestore }) => {
         //проверяем есть или нет, так как делаем очистку
         if (userInfo) {
