@@ -102,6 +102,18 @@ export const sendAudioMessageAC = (message) => {
     }
 }
 
+export const deleteMessageTC = (messageId, dialogId) => {
+    return (dispatch, getState, { getFirebase, getFirestore }) => {
+        const firestore = getFirestore();
+        firestore.collection(`dialogs/${dialogId}/messages`).doc(messageId).delete().then((response) => {
+            console.log('Удалено сообщение с id:', messageId)
+        }).catch((err) => {
+            console.log('MessageDeleteERR', err)
+        })
+    }
+}
+
+
 export const sendAudioMessageTC = (file, myId, dialogId) => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {
         const sendLoading = getState().sendMessages.sendLoading
