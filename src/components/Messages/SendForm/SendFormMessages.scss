@@ -17,7 +17,8 @@
         overflow: hidden;
         position: absolute;
         img {
-            height: 100px;
+            max-height: 100px;
+            cursor: pointer;
         }
     }
     textarea {

@@ -27,6 +27,7 @@ const ImageMessage = (props) => {
     }
     return (
         <>
+            {props.title ? props.title : ''}
             <div className='imgItem' onClick={showModal}
                 style={{ backgroundImage: `url(${image})` }}>
                 <img src={image} alt='imageMessage' />

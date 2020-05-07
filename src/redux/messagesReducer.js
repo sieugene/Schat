@@ -126,7 +126,7 @@ export const sendAudioMessageTC = (file, myId, dialogId) => {
         }
     }
 }
-export const sendImageMessageTC = (file, myId, dialogId) => {
+export const sendImageMessageTC = (file, myId, dialogId, title = '') => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {
         const sendLoading = getState().sendMessages.sendLoading
         if (!sendLoading) {
@@ -141,7 +141,8 @@ export const sendImageMessageTC = (file, myId, dialogId) => {
                     body: response.metadata.fullPath,
                     createdAt: new Date(),
                     uid: myId,
-                    messageType: 'img'
+                    messageType: 'img',
+                    title: title
                 }
                 dispatch(sendMessageTC(message, dialogId));
                 dispatch(setImagePreviewUrlAC(null));

@@ -13,6 +13,7 @@ import TextAreaCustom from './TextAreaCustom/TextAreaCustom';
 
 const SendFormMessages = (props) => {
     const typingValue = props.textMessage;
+    //text
     const sendingMessage = () => {
         const message = {
             body: typingValue,
@@ -21,6 +22,11 @@ const SendFormMessages = (props) => {
             messageType: 'text'
         }
         props.sendMessageTC(message, props.match.params.roomId);
+        props.setCurrentTextMessageAC('')
+    }
+    //text + image
+    const sendingMessageWithImage = () => {
+        props.sendImageMessageTC(props.imgFile,props.myId,props.match.params.roomId,typingValue)
         props.setCurrentTextMessageAC('')
     }
     return (
@@ -55,13 +61,7 @@ const SendFormMessages = (props) => {
                     {props.previewImg ?
                         <div className="sendButton">
                             <SendOutlined style={{ fontSize: '20px', color: 'red' }}
-                                onClick={() => {
-                                    props.sendImageMessageTC(
-                                        props.imgFile,
-                                        props.myId,
-                                        props.match.params.roomId
-                                    )
-                                }}
+                                onClick={sendingMessageWithImage}
                             />
                         </div>
                         :

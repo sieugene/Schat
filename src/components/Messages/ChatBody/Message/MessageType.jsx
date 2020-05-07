@@ -8,7 +8,7 @@ const MessageType = (props) => {
 
     let content = '';
     if (props.messageType === 'img') {
-        content = <ImageMessage image={props.message} />
+        content = <ImageMessage image={props.message} title={props.title} />
     }
     if (props.messageType === 'text') {
         content = <TextMessage message={props.message} />

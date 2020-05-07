@@ -15,6 +15,7 @@ const Message = (props) => {
                                 style={{ justifyContent: props.alignMessage }}>
                                 <MessageType message={props.message}
                                     createdAt={props.createdAt}
+                                    title={props.title}
                                     messageType={props.messageType} />
                                 {props.myAvatar}
                             </div>
@@ -28,6 +29,7 @@ const Message = (props) => {
                                 {props.userAvatar}
                                 <MessageType message={props.message}
                                     createdAt={props.createdAt}
+                                    title={props.title}
                                     messageType={props.messageType} />
                             </div>
                         </Col>

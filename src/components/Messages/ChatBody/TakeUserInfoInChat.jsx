@@ -80,6 +80,7 @@ const TakeUserInfoInChat = (props) => {
                         createdAt={m.createdAt}
                         userAvatar={userAvatar}
                         myAvatar={myAvatar}
+                        title={m.title ? m.title : ''}
                     />
                 })
                 :
