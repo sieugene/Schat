@@ -24,7 +24,10 @@ class LimitMessages extends React.Component {
    
     componentDidUpdate(prevProps) {
         if (this.props.messages.length !== prevProps.messages.length) {
-            if (this.props.limitMessages > this.props.messages.length) {
+            if(this.props.messages.length < prevProps.messages.length){
+
+            }
+            else if (this.props.limitMessages > this.props.messages.length) {
                 this.toggleShow();
             }
         }
