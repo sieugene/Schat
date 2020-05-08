@@ -5,7 +5,6 @@ import './Message.scss'
 
 
 const Message = (props) => {
-    //for modal delete message
     function confirmDeleteMessage(e) {
         props.deleteMessageTC(props.messageId, props.dialogId)
     }
@@ -13,10 +12,6 @@ const Message = (props) => {
     function cancelDeleteMessage(e) {
         console.log(e);
     }
-
-
-    //end
-
     return (
         <Col span={24}>
             <Row justify={props.alignMessage}>

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Row, Col } from 'antd';
 import Dialogs from '../../Dialogs/Dialogs';
-import Messages from '../../Messages/Messages';
 import { Route, withRouter, Redirect } from 'react-router-dom';
 import { compose } from 'redux';
 import {MobileView} from "react-device-detect";
+import MessagesContainer from '../../Messages/MessagesContainer';
 
 const Chat = (props) => {
     
@@ -21,7 +21,7 @@ const Chat = (props) => {
                     <Dialogs />
                 </Col>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                    <Route path='/chat/dialog/:roomId' render={() => (<Messages />)} />
+                    <Route path='/chat/dialog/:roomId' render={() => (<MessagesContainer />)} />
                 </Col>
 
             </Row>

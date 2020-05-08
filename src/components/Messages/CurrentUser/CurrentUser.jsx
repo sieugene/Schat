@@ -1,24 +1,28 @@
 import React from 'react'
-import { getNameInDialog, userIsOnline } from '../../Dialogs/Helper/HelperDialog'
+import { userIsOnlineInDialog } from '../MessagesHelper/MessagesHelper'
+import { Spin } from 'antd'
 
 
 
 const CurrentUser = (props) => {
+
+    if (props.loadingData) {
+        return <Spin/>
+    }
     return (
-        <div>
-            <h3 className="messages__currentName">
-                {getNameInDialog(props.dialog[0].invited, props.dialog[0].creator,
-                    props.users,
-                    props.myId
-                )}
-            </h3>
-            <p className="messages__isonline">
-                {userIsOnline(props.dialog[0].invited, props.dialog[0].creator,
-                    props.users,
-                    props.myId,
-                    props.usersOnline)}
-            </p>
-        </div>
+        <>
+            {
+                props.userInfo &&
+                <div>
+                    <h3 className="messages__currentName">
+                        {props.userInfo.firstName}
+                    </h3>
+                    <p className="messages__isonline">
+                        {userIsOnlineInDialog(props.userInfo.id, props.usersOnline)}
+                    </p>
+                </div>
+            }
+        </>
 
     )
 }

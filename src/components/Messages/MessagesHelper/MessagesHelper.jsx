@@ -26,3 +26,16 @@ export const checkManyOneDay = (createdAt) => {
         }
     }
 }
+//Определение онлайна внутри диалога
+export const userIsOnlineInDialog = (userId, usersOnlineArray) => {
+    if(userId){
+        let result = usersOnlineArray ? usersOnlineArray.filter((u) => {
+            return u.key === userId
+        }) : []
+        if (result.length >= 1) {
+            return 'online'
+        } else {
+            return 'offline'
+        }
+    }
+}
