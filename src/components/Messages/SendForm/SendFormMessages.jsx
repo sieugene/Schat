@@ -26,9 +26,12 @@ const SendFormMessages = (props) => {
     }
     //text + image
     const sendingMessageWithImage = () => {
-        props.sendImageMessageTC(props.imgFile,props.myId,props.match.params.roomId,typingValue)
+        props.sendImageMessageTC(props.imgFile, props.myId, props.match.params.roomId, typingValue)
         props.setCurrentTextMessageAC('')
     }
+    //изменение col ,если записывается ГЛ
+    const colOptions2 = props.audioRecording ? 24 : 2;
+    const colOptions4 = props.audioRecording ? 24 : 4;
     return (
         <Col span={24}>
             <Row className='maxHeight__sendForm'>
@@ -37,7 +40,7 @@ const SendFormMessages = (props) => {
                         <Spin />
                     </div>
                 }
-                <Col span={22}>
+                <Col xs={20} sm={20} md={20} lg={22} xl={22}>
                     {props.audioRecording ? '' :
                         <TextAreaCustom typingValue={typingValue}
                             setValue={props.setCurrentTextMessageAC}
@@ -57,7 +60,11 @@ const SendFormMessages = (props) => {
                         />
                     </div>}
                 </Col>
-                <Col span={props.audioRecording ? 24 : 2}>
+                <Col xs={colOptions4}
+                    sm={colOptions4}
+                    md={colOptions2}
+                    lg={colOptions2}
+                    xl={colOptions2}>
                     {props.previewImg ?
                         <div className="sendButton">
                             <SendOutlined style={{ fontSize: '20px', color: 'red' }}

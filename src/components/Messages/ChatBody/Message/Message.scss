@@ -47,6 +47,12 @@
             color: black;
             word-break: break-all;
         }
+        @media screen and (max-width: 800px) {
+            p {
+                font-size: 14px;
+            }
+            max-width: 226px;
+        }
     }
 }
 
@@ -66,6 +72,11 @@
     img {
         max-width: 282px;
         padding: 0px;
+    }
+    @media screen and (max-width: 800px) {
+        img {
+            max-width: 200px;
+        }
     }
     .ant-avatar.ant-avatar-icon {
         margin-right: 10px !important;
