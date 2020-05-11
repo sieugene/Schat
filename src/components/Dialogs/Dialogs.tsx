@@ -5,7 +5,8 @@ import { Row } from 'antd'
 import ListDialogs from './ListDialogs/ListDialogs';
 import './Dialogs.scss'
 import FooterDialogs from './FooterDialogs/FooterDialogs';
-const Dialogs = (props) => {
+
+const Dialogs:React.FC = () => {
     return (
         <div className="dialogs">
             <Row justify="space-between" className='header__dialogs'>

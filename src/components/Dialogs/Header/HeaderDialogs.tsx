@@ -4,9 +4,21 @@ import ProfileUser from './ProfileUser/ProfileUser'
 import NavbarDialogs from './Navbar/NavbarDialogs';
 import './HeaderDialogs.scss'
 import { connect } from 'react-redux';
-import { setUserImageTC } from './../../../redux/meReducer';
+import { setUserImageTC } from '../../../redux/meReducer';
+import { FirebaseReducer } from 'react-redux-firebase';
+import { AppStateType } from '../../../redux/store';
 
-const HeaderDialogs = (props) => {
+type MapPropsType = {
+    profile: FirebaseReducer.Profile<any>,
+    myId: string
+}
+type DispatchPropsType = {
+    setUserImageTC: (file: File,myId:string) => void
+}
+
+type PropsType = MapPropsType & DispatchPropsType
+
+const HeaderDialogs:React.FC<PropsType> = (props) => {
     return (
         <>
             <Col>
@@ -21,7 +33,7 @@ const HeaderDialogs = (props) => {
         </>
     )
 }
-let mapStateToProps = (state) => {
+let mapStateToProps = (state:AppStateType):MapPropsType => {
     return{
         profile: state.firebase.profile,
         myId: state.firebase.auth.uid

@@ -1,30 +1,14 @@
 import React from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { AppStateType } from './redux/store';
-import { FirebaseReducer } from 'react-redux-firebase';
-import Chat from './components/Pages/Chat/Chat';
 import { Route, withRouter, Redirect } from 'react-router-dom';
 import Login from './components/Pages/Auth/Login';
 import Register from './components/Pages/Auth/Register';
 import { Spin } from 'antd';
+import Chat from './components/Pages/Chat/Chat';
 
 
-
-
-type mapStateType = {
-  firebaseAuth: FirebaseReducer.AuthState
-}
-type mapDispatchType = {
-  signOutThunkCreator: () => void
-}
-type OwnerType = {
-  location: {
-    pathname: string
-  }
-}
-type PropsType = mapStateType & mapDispatchType & OwnerType
-const App: React.FC<PropsType> = (props) => {
+const App = (props) => {
   if (props.location.pathname === '/') {
     return <Redirect to='/login' />
   }
@@ -40,7 +24,7 @@ const App: React.FC<PropsType> = (props) => {
   );
 }
 
-let mapStateToProps = (state: AppStateType): mapStateType => {
+let mapStateToProps = (state) => {
   return {
     firebaseAuth: state.firebase.auth
   }

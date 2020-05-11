@@ -5,8 +5,16 @@ import { Route, withRouter, Redirect } from 'react-router-dom';
 import { compose } from 'redux';
 import {MobileView} from "react-device-detect";
 import MessagesContainer from '../../Messages/MessagesContainer';
+import { FirebaseReducer } from 'react-redux-firebase';
+import { connect } from 'react-redux';
 
-const Chat = (props) => {
+type OwnerPropsType = {
+    firebaseAuth: FirebaseReducer.AuthState
+}
+
+type PropsType = OwnerPropsType
+
+const Chat:React.FC<PropsType> = (props) => {
     
     if (!props.firebaseAuth.uid) {
         return <Redirect to='/login' />
@@ -31,4 +39,4 @@ const Chat = (props) => {
 
 
 
-export default compose(withRouter)(Chat)
+export default compose(withRouter,connect(null,null))(Chat)
