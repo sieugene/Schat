@@ -1,9 +1,16 @@
 # Schat
 
-Чат в реальном времени созданный с использованием firebase. 
-### `Приложение находится в Beta`
+Чат в реальном времени созданный с использованием firebase. Не имеет полноценный функционал современных "чатов", является простым SPA приложением. Ниже есть подробная информация о приложении, также скриншоты.
+### `Приложение находится в Beta, имеются баги`
 Ссылка - https://schat-a0111.web.app/
 #  Журнал изменений
+
+ 1.4
+  - Удаление сообщений
+  - Изменение сбора информации о пользователе
+  - Исправлен загрузчик
+  - Рефакторинг
+  - Исправление верстки
 
  1.3
   - Доработка "предпросмотра" изображений, перед загрузкой
@@ -33,9 +40,10 @@
   
 ### `Не реализовано:`
   - Нет правил/ограничений под выдачу данных ✖ 
-  - Удаление сообщений и диалогов ✖ 
+  - Удаление сообщений ✔ 
   - Установка аватарки пользователя ✔
-  - Верстка и адаптив ✖ 
+  - Верстка ✔
+  - Адаптация под мобильные устройства ✖
   - Отображение прочитано сообщение или нет ✖ 
   
 
@@ -78,6 +86,7 @@
 ![demo](https://github.com/sieugene/Schat/blob/master/src/ghImages/2.png?raw=true)
 ![demo](https://github.com/sieugene/Schat/blob/master/src/ghImages/3.png?raw=true)
 ![demo](https://github.com/sieugene/Schat/blob/master/src/ghImages/4.png?raw=true)
+![demo](https://github.com/sieugene/Schat/blob/master/src/ghImages/5.png?raw=true)
 
    This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
