@@ -1,4 +1,8 @@
 import firebase from 'firebase'
+import { AppStateType } from './store'
+import { Dispatch } from 'redux'
+import { ThunkAction } from 'redux-thunk'
+
 
 const IS_LOADED = 'IS_LOADED'
 const SET_ERRORS_SIGN_IN = 'SET_ERRORS'
@@ -12,8 +16,9 @@ let initialState = {
     }
 }
 
+type InitialStateType = typeof initialState;
 
-const authReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action: any): InitialStateType => {
     switch (action.type) {
         case IS_LOADED:
             {
@@ -26,14 +31,14 @@ const authReducer = (state = initialState, action) => {
             {
                 return {
                     ...state,
-                    errors: {...state.errors, errorsSignIn: action.err }
+                    errors: { ...state.errors, errorsSignIn: action.err }
                 }
             }
         case SET_ERRORS_SIGN_UP:
             {
                 return {
                     ...state,
-                    errors: {...state.errors, errorsSignUp: action.err }
+                    errors: { ...state.errors, errorsSignUp: action.err }
                 }
             }
         default:
@@ -41,26 +46,53 @@ const authReducer = (state = initialState, action) => {
     }
 }
 
-const toggleLoadingAC = (load) => {
+
+type ActionsType = any
+//actions creator
+type ToggleLoadingACType = {
+    type: typeof IS_LOADED,
+    load: boolean
+}
+
+const toggleLoadingAC = (load: boolean): ToggleLoadingACType => {
     return {
         type: IS_LOADED,
         load
     }
 }
-const setErrorsSignInAC = (err) => {
+type ErrorType = {
+    a: string | null
+    code: string
+    message: string
+} | []
+type SetErrorsSignInACType = {
+    type: typeof SET_ERRORS_SIGN_IN,
+    err: ErrorType
+}
+const setErrorsSignInAC = (err: ErrorType): SetErrorsSignInACType => {
     return {
         type: SET_ERRORS_SIGN_IN,
         err
     }
 }
-export const setErrorsSignUpAC = (err) => {
+type SetErrorsSignUpACType = {
+    type: typeof SET_ERRORS_SIGN_UP,
+    err: ErrorType
+}
+export const setErrorsSignUpAC = (err: ErrorType): SetErrorsSignUpACType => {
     return {
         type: SET_ERRORS_SIGN_UP,
         err
     }
 }
-export const authThunkCreator = (credentials) => {
-    return (dispatch, getFirebase) => {
+//thunks 
+type GetStateType = () => AppStateType
+type DispatchType = Dispatch<ActionsType>
+type ThunkActionType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>
+
+
+export const authThunkCreator = (credentials: any): ThunkActionType => {
+    return (dispatch) => {
         dispatch(toggleLoadingAC(true));
         return firebase.auth().signInWithEmailAndPassword(
             credentials.email,
@@ -69,6 +101,7 @@ export const authThunkCreator = (credentials) => {
             console.log('Auth success')
             dispatch(toggleLoadingAC(false))
         }).catch((err) => {
+            debugger
             console.log('Some errors in auth')
             dispatch(toggleLoadingAC(false))
             dispatch(setErrorsSignInAC(err))
@@ -78,7 +111,7 @@ export const authThunkCreator = (credentials) => {
         })
     }
 }
-export const signOutThunkCreator = () => (dispatch) => {
+export const signOutThunkCreator = () => (dispatch: DispatchType) => {
     firebase.auth().signOut().then(() => {
         console.log('Sign out Success')
     }).catch(() => {
@@ -86,18 +119,21 @@ export const signOutThunkCreator = () => (dispatch) => {
     })
 }
 
-export const signUpThunkCreator = (newUser) => {
-    return (dispatch, getState, { getFirebase, getFirestore }) => {
+
+export const signUpThunkCreator = (newUser: { email: string, password: string, firstName: string }) => {
+    return (dispatch: any, getState: any, { getFirebase, getFirestore }: any) => {
         dispatch(toggleLoadingAC(true));
         const firestore = getFirestore();
         firebase.auth().createUserWithEmailAndPassword(newUser.email, newUser.password).then((response) => {
-            firestore.collection('users').doc(response.user.uid).set({
+            if (response.user) {
+                firestore.collection('users').doc(response.user.uid).set({
                     firstName: newUser.firstName,
                     photoURL: '',
                     createdAt: new Date(),
                     email: newUser.email
                 })
-                //firestore.collection('dialogs').doc(response.user.uid).set({})
+            }
+            //firestore.collection('dialogs').doc(response.user.uid).set({})
         }).then((response) => {
             dispatch(toggleLoadingAC(false));
         }).catch((err) => {
