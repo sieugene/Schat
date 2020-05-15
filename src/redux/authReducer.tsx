@@ -2,6 +2,7 @@ import firebase from 'firebase'
 import { AppStateType } from './store'
 import { Dispatch } from 'redux'
 import { ThunkAction } from 'redux-thunk'
+import { ExtendedFirebaseInstance, ExtendedAuthInstance, ExtendedStorageInstance, ExtendedFirestoreInstance } from 'react-redux-firebase'
 
 
 const IS_LOADED = 'IS_LOADED'
@@ -11,14 +12,19 @@ const SET_ERRORS_SIGN_UP = 'SET_ERRORS_SIGN_UP'
 let initialState = {
     isLoaded: false,
     errors: {
-        errorsSignIn: [],
-        errorsSignUp: []
+        errorsSignIn: [] as [] | ErrorType,
+        errorsSignUp: [] as [] | ErrorType
     }
 }
+type ErrorType = {
+    a: string | null
+    code: string
+    message: string
+} | []
 
 type InitialStateType = typeof initialState;
 
-const authReducer = (state = initialState, action: any): InitialStateType => {
+const authReducer = (state = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
         case IS_LOADED:
             {
@@ -47,7 +53,7 @@ const authReducer = (state = initialState, action: any): InitialStateType => {
 }
 
 
-type ActionsType = any
+type ActionsType = SetErrorsSignUpACType | ToggleLoadingACType | SetErrorsSignInACType
 //actions creator
 type ToggleLoadingACType = {
     type: typeof IS_LOADED,
@@ -60,11 +66,6 @@ const toggleLoadingAC = (load: boolean): ToggleLoadingACType => {
         load
     }
 }
-type ErrorType = {
-    a: string | null
-    code: string
-    message: string
-} | []
 type SetErrorsSignInACType = {
     type: typeof SET_ERRORS_SIGN_IN,
     err: ErrorType
@@ -88,6 +89,7 @@ export const setErrorsSignUpAC = (err: ErrorType): SetErrorsSignUpACType => {
 //thunks 
 type GetStateType = () => AppStateType
 type DispatchType = Dispatch<ActionsType>
+type GetFirebaseType = ExtendedFirebaseInstance & ExtendedAuthInstance & ExtendedStorageInstance
 type ThunkActionType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>
 
 
@@ -119,9 +121,20 @@ export const signOutThunkCreator = () => (dispatch: DispatchType) => {
     })
 }
 
+type NewUserType = {
+    email: string
+    password: string
+    firstName: string
+}
 
-export const signUpThunkCreator = (newUser: { email: string, password: string, firstName: string }) => {
-    return (dispatch: any, getState: any, { getFirebase, getFirestore }: any) => {
+type OptionsThunkFirebase = {
+    getFirebase: GetFirebaseType,
+    getFirestore: () => ExtendedFirestoreInstance
+}
+export const signUpThunkCreator = (newUser: NewUserType) => {
+    return (dispatch: DispatchType,
+        getState: GetStateType,
+        { getFirebase, getFirestore }: OptionsThunkFirebase) => {
         dispatch(toggleLoadingAC(true));
         const firestore = getFirestore();
         firebase.auth().createUserWithEmailAndPassword(newUser.email, newUser.password).then((response) => {
